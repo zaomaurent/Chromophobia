@@ -3,6 +3,7 @@ Jeu en 3d utilisant le raycasting. Projet de 1ere en spécialité NSI
 
 But du projet : créer un jeu en 3d sur python grace a pygame et au raycasting.
 
+Objectifs :
 - Créer un environnement 3d
 
 - Le personnage peut se déplacer dans l'environnement 3d (touches clavier reliés au déplacements)
