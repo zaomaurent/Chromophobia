@@ -22,11 +22,12 @@ def MouseMotion():
         HEIGHT += motion_y
 
     mouse.set_pos(MID_POINT)
+    return HEIGHT
 
 
 
-def Deplacements(current_speed, speed):
-    global player_x, player_y, player_rotation, HEIGHT, player_rotation
+def Deplacements(current_speed, speed, HEIGHT):
+    global player_x, player_y, player_rotation, player_rotation
     # player_hitbox = (player_x - 10, player_y - 10, player_x + 10, player_y + 10)
     cos, sin = m.cos(player_rotation), m.sin(player_rotation)
     get_pressed = pg.key.get_pressed()
@@ -53,13 +54,6 @@ def Deplacements(current_speed, speed):
     if get_pressed[pg.K_q] and Verif(player_x + g_x, player_y + g_y, map_number):
         player_x, player_y = player_x + g_x, player_y + g_y
 
-    MouseMotion()
+    HEIGHT = MouseMotion()
 
-
-    return player_x, player_y, player_rotation
-
-
-
-    if get_pressed[pg.K_1]:
-       player_x, player_y, player_rotation = map.MAP_SIZE / 2 * TS, map.MAP_SIZE / 2 * TS, 0
-# ZAO à changer map.MAP_SIZE
+    return player_x, player_y, player_rotation, HEIGHT
