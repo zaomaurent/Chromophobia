@@ -80,7 +80,7 @@ def RayCalcul(RayAngle, player_x, player_y, player_rotation):
             return MAX_DEPTH + 1, False, False
 
 
-def RayCasting(player_x, player_y, player_rotation):
+def RayCasting(player_x, player_y, player_rotation, HEIGHT):
 
     for index in range(int(nb_LINE)):
         Angle = player_rotation - index * RAY_SENSI + HALF_FOV
@@ -95,12 +95,11 @@ def RayCasting(player_x, player_y, player_rotation):
         # wall_side : pour savoir si le mur touché est un mur de horizontal ou verticale
         distance, wall_coord, wall_side = RayCalcul(Angle, player_x, player_y, player_rotation)
         if distance < MAX_DEPTH:
-            RayDrawing(distance, index, Angle, wall_coord, wall_side, player_x, player_y, player_rotation)
+            RayDrawing(distance, index, Angle, wall_coord, wall_side, player_x, player_y, player_rotation, HEIGHT)
 
 
 
-def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, player_y, player_rotation):
-    global HEIGHT
+def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, player_y, player_rotation, HEIGHT):
     global line_repeat
 
     # Correction de l'effet de distortion
