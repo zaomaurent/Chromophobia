@@ -5,7 +5,8 @@ from constantes import *
 from functions import *
 
 
-def RayCalcul(RayAngle):
+def RayCalcul(RayAngle, player_x, player_y, player_rotation):
+
     wall = False
     rot_d = m.degrees(RayAngle)
     sin, cos = m.sin(RayAngle), m.cos(RayAngle)
@@ -79,7 +80,8 @@ def RayCalcul(RayAngle):
             return MAX_DEPTH + 1, False, False
 
 
-def RayCasting():
+def RayCasting(player_x, player_y, player_rotation):
+
     for index in range(int(nb_LINE)):
         Angle = player_rotation - index * RAY_SENSI + HALF_FOV
         Angle_d = m.degrees(Angle)
@@ -91,12 +93,13 @@ def RayCasting():
         # distance : distance au mur le plus proche aligné au rayon
         # wall_part : le rayon arrive sur une partie du mur, exemple: le milieu ou les bord du mur
         # wall_side : pour savoir si le mur touché est un mur de horizontal ou verticale
-        distance, wall_coord, wall_side = RayCalcul(Angle)
+        distance, wall_coord, wall_side = RayCalcul(Angle, player_x, player_y, player_rotation)
         if distance < MAX_DEPTH:
-            RayDrawing(distance, index, Angle, wall_coord, wall_side)
+            RayDrawing(distance, index, Angle, wall_coord, wall_side, player_x, player_y, player_rotation)
 
 
-def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side):
+
+def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, player_y, player_rotation):
     global HEIGHT
     global line_repeat
 
@@ -147,4 +150,3 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side):
         slice_y = (tailleY / 2) - (wall_height // 2)
         screen.blit(column,
                     (line_index * LINE_SIZE, slice_y + HEIGHT))  # Affichage prennant en compte le mouv de la souris
-
