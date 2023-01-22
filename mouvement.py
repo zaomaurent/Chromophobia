@@ -2,8 +2,9 @@ from constantes import *
 from functions import Verif
 
 
+
 def MouseMotion():
-    global HEIGHT, player_rotation
+    global HEIGHT, player_rotation, MID_POINT
     x, y = mouse.get_pos()
     motion_x, motion_y = MID_POINT[0] - x, MID_POINT[1] - y
     motion_angle = mouse_coef * motion_x
@@ -23,8 +24,9 @@ def MouseMotion():
     mouse.set_pos(MID_POINT)
 
 
+
 def Deplacements(current_speed, speed):
-    global player_x, player_y, player_rotation
+    global player_x, player_y, player_rotation, HEIGHT, player_rotation
     # player_hitbox = (player_x - 10, player_y - 10, player_x + 10, player_y + 10)
     cos, sin = m.cos(player_rotation), m.sin(player_rotation)
     get_pressed = pg.key.get_pressed()
@@ -53,5 +55,11 @@ def Deplacements(current_speed, speed):
 
     MouseMotion()
 
+
+    return player_x, player_y, player_rotation
+
+
+
     if get_pressed[pg.K_1]:
-        player_x, player_y, player_rotation = map.MAP_SIZE / 2 * TS, map.MAP_SIZE / 2 * TS, 0
+       player_x, player_y, player_rotation = map.MAP_SIZE / 2 * TS, map.MAP_SIZE / 2 * TS, 0
+# ZAO à changer map.MAP_SIZE
