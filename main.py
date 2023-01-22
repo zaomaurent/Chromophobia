@@ -42,11 +42,13 @@ while running:
     # screen.fill((0, 0, 0))
 
     if mouse.get_focused():
-        player_x, player_y, player_rotation = Deplacements(current_speed, speed)
+        from constantes import speed
+        speed = speed * (60/clock.get_fps())
+        player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, HEIGHT)
         mid = (tailleY / 2) + HEIGHT
         pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
         pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
-        RayCasting(player_x, player_y, player_rotation)
+        RayCasting(player_x, player_y, player_rotation, HEIGHT)
         draw_minimap()
         screen.blit(Crosshair, Crosshair_coord)
     pg.display.flip()
