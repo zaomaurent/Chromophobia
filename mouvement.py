@@ -44,15 +44,19 @@ def Deplacements(current_speed, speed, HEIGHT):
 
     if get_pressed[pg.K_z] and Verif(player_x - plus_x, player_y - plus_y, map_number):  # Si la case n'est pas un mur
         player_x, player_y = player_x - plus_x, player_y - plus_y
+        Mouv_cam(HEIGHT, current_speed)
 
     if get_pressed[pg.K_s] and Verif(player_x + plus_x, player_y + plus_y, map_number):
         player_x, player_y = player_x + plus_x, player_y + plus_y
+        Mouv_cam(HEIGHT, current_speed)
 
     if get_pressed[pg.K_d] and Verif(player_x + d_x, player_y + d_y, map_number):
         player_x, player_y = player_x + d_x, player_y + d_y
+        Mouv_cam(HEIGHT, current_speed)
 
     if get_pressed[pg.K_q] and Verif(player_x + g_x, player_y + g_y, map_number):
         player_x, player_y = player_x + g_x, player_y + g_y
+        Mouv_cam(HEIGHT, current_speed)
 
     HEIGHT = MouseMotion()
 
