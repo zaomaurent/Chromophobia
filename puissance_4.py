@@ -63,19 +63,15 @@ def f_verifautrediago(hauteur,longueur,streak,couleur):
   elif tab[2][6]==couleur and  tab[3][5]==couleur and  tab[4][4]==couleur and  tab[5][3]==couleur :
     streak=False
   return streak
-
-tab=[['.','.','.','.','.','.','.'],
+def puissance4(tab):
+  tab=[['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.']]
-
-def puissance4(tab):
   streak=True
   streak1=True
-
-  
   while streak and streak1  :
     a=int(input("Dans quelle colonne voulez vous placer un pions. "))#pour le joueur 1 
     if a>7:
