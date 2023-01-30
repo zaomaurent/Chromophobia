@@ -39,3 +39,16 @@ def InMap(coord):
 
 def Distance(a, b):
     return m.sqrt((a ** 2 + b ** 2))
+
+
+def Mouv_cam(height, current_speed):
+    global max_height,min_height, cam_mouv
+
+    if max_height<=height:
+        cam_mouv = -1
+
+    elif min_height>=height:
+        cam_mouv = 1
+
+
+    height += cam_mouv * current_speed
