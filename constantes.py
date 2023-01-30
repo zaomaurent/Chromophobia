@@ -73,3 +73,8 @@ wall_textures = [  # Chaque element a pour forme (objet pygame du la texture, r√
 mouse = pg.mouse
 background = pg.image.load("Assets/GUI/background.png").convert()  # image de fond du menu d'accueil
 clock = pg.time.Clock()
+
+
+max_height = 50
+min_height = -50
+cam_mouv = 1
