@@ -4,10 +4,11 @@ import sys
 
 # Import des autres fonctions du programme
 from constantes import *
+from interface import *
 from menu import *
 from mouvement import *
 from raycasting import *
-from sprites import *
+from sprites import Sprite
 
 
 def draw_minimap():
@@ -18,9 +19,6 @@ def draw_minimap():
                 (200, 200, 200) if map["map"][y][x] == 0 else (100 * abs(map["map"][y][x]) / 2, 100, 100),
                 (x * TS, y * TS, TS, TS)
             )
-
-    for sprite in sprites.values():
-        pg.draw.circle(screen, (0, 125, 200), sprite["position"], 4)
 
     pg.draw.circle(screen, (255, 0, 0), (player_x, player_y), 4)
     pg.draw.line(screen, (255, 0, 0), (player_x, player_y),
@@ -45,14 +43,14 @@ while running:
     # screen.fill((0, 0, 0))
 
     if mouse.get_focused():
-        player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, HEIGHT, player_x, player_y,
-                                                                   player_rotation)
+        from constantes import speed
+        #speed = speed * (60/clock.get_fps())
+        player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, HEIGHT)
         mid = (tailleY / 2) + HEIGHT
-
         pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
         pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
-        Sprite(player_rotation, HEIGHT)
-        RayCasting(player_x, player_y, player_rotation, HEIGHT)
+        dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)
+        Sprite(player_x,player_y,player_rotation,HEIGHT, dist_list)
         draw_minimap()
         screen.blit(Crosshair, Crosshair_coord)
     pg.display.flip()
