@@ -80,6 +80,7 @@ def RayCalcul(RayAngle, player_x, player_y, player_rotation):
 
 
 def RayCasting(player_x, player_y, player_rotation, HEIGHT):
+    dist_list = []
     for index in range(int(nb_LINE)):
         Angle = player_rotation - index * RAY_SENSI + HALF_FOV
         Angle_d = m.degrees(Angle)
@@ -92,8 +93,11 @@ def RayCasting(player_x, player_y, player_rotation, HEIGHT):
         # wall_part : le rayon arrive sur une partie du mur, exemple: le milieu ou les bord du mur
         # wall_side : pour savoir si le mur touché est un mur de horizontal ou verticale
         distance, wall_coord, wall_side = RayCalcul(Angle, player_x, player_y, player_rotation)
+        dist_list.append(distance)
         if distance < MAX_DEPTH:
             RayDrawing(distance, index, Angle, wall_coord, wall_side, player_x, player_y, player_rotation, HEIGHT)
+
+    return dist_list
 
 
 def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, player_y, player_rotation, HEIGHT):
