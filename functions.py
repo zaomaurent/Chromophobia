@@ -1,3 +1,5 @@
+import math as m
+
 import pygame as pg
 import sys
 
@@ -7,6 +9,7 @@ from maps import maps
 
 def ExitWindow(event):
     if event.type == pg.QUIT:
+        pg.quit()
         sys.exit()
     else:
         return True
@@ -41,14 +44,12 @@ def Distance(a, b):
     return m.sqrt((a ** 2 + b ** 2))
 
 
-def Mouv_cam(height, current_speed):
-    global max_height,min_height, cam_mouv
-
-    if max_height<=height:
-        cam_mouv = -1
-
-    elif min_height>=height:
-        cam_mouv = 1
-
-
-    height += cam_mouv * current_speed
+def Verif_Angle(angle, mode):
+    if mode == "rad":
+        angle = m.degrees(angle)
+    if angle < 0:
+        angle = 360 + angle
+    angle %= 360
+    if mode == "rad":
+        return m.radians(angle)
+    return angle

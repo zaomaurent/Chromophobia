@@ -6,7 +6,6 @@ from functions import *
 
 
 def RayCalcul(RayAngle, player_x, player_y, player_rotation):
-
     wall = False
     rot_d = m.degrees(RayAngle)
     sin, cos = m.sin(RayAngle), m.cos(RayAngle)
@@ -81,7 +80,6 @@ def RayCalcul(RayAngle, player_x, player_y, player_rotation):
 
 
 def RayCasting(player_x, player_y, player_rotation, HEIGHT):
-
     for index in range(int(nb_LINE)):
         Angle = player_rotation - index * RAY_SENSI + HALF_FOV
         Angle_d = m.degrees(Angle)
@@ -98,7 +96,6 @@ def RayCasting(player_x, player_y, player_rotation, HEIGHT):
             RayDrawing(distance, index, Angle, wall_coord, wall_side, player_x, player_y, player_rotation, HEIGHT)
 
 
-
 def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, player_y, player_rotation, HEIGHT):
     global line_repeat
 
@@ -108,7 +105,7 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, 
 
     if distance < MAX_DEPTH:
         if distance > 1:
-            wall_height = int((TS / 1 / distance) * SCREEN_DISTANCE)
+            wall_height = int(((TS / 1) / distance) * SCREEN_DISTANCE)
         else:
             wall_height = tailleY
         rota_deg = m.degrees(RayAngle)  # Allège le programme en calculs

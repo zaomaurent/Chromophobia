@@ -4,7 +4,6 @@ import sys
 
 from constantes import *
 from functions import ExitWindow
-from interface import Interface
 
 
 def IsClicked(coord, ex, ey, x=0, y=0):
@@ -21,6 +20,16 @@ def FonduIn():
         fondu.set_alpha(1)
         screen.blit(fondu, (0, 0))
         pg.display.flip()
+
+
+def dark_bg(alpha):  # Pour rendre le fond plus sombre
+
+    Surface = pg.Surface((tailleX, tailleY))
+    Surface.set_alpha(alpha)
+    Surface.fill((15, 15, 15))
+    screen.blit(Surface, (0, 0))
+    pg.display.flip()
+
 
 
 def Menu():
@@ -118,19 +127,28 @@ def Pause():
     ]
     menu_pause = pg.image.load("Assets/GUI/button.png")
     x, y, h, w = (tailleX / 4), (tailleY / 8), (tailleX / 2), ((tailleY / 8) * 6)
-    BG = Interface(screen, x, y, h, w, (0, 0, 0), 0, 220)
-    BG.Darken_Background()
-    BG.ShowGUI()
-    while BG.running:
-        BG.Display()
+
+    inpause = True
+
+    dark_bg(220)
+    while inpause:
+
+        for event in pg.event.get():
+            ExitWindow(event)
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    return
+            pg.display.flip()
+            clock.tick(60)
+
         get_clicked = mouse.get_pressed()
-        screen.blit(menu_pause, (BG.x, BG.y))
+        screen.blit(menu_pause, (x, y))
         if get_clicked[0]:
             ex, ey = mouse.get_pos()
             for index, button in enumerate(Button_Coord):
                 if IsClicked(button, ex, ey, x, y):
                     if index == 0:
-                        BG.running = False
+                        inpause = False
                         mouse.set_pos(MID_POINT)
                     elif index == 1:
                         Parametres(background)
@@ -139,6 +157,6 @@ def Pause():
                     elif index == 3:
                         sys.exit()
                     elif index == 4:
-                        BG.running = False
+                        inpause = False
                         FonduIn()
                         Menu()

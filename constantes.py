@@ -39,7 +39,7 @@ speed = 1 * TS / 25  # vitesse de base du joueur
 current_speed = speed  # deuxieme variable afin de pouvoir courir
 
 # Pour le Raycaster
-LINE_SIZE = 1  # Le raycaster fonctionne par colonne qu'il affiche, LINE_SIZE est la taille en pixel de ces colonnes
+LINE_SIZE = 4  # Le raycaster fonctionne par colonne qu'il affiche, LINE_SIZE est la taille en pixel de ces colonnes
 nb_LINE = tailleX / LINE_SIZE  # Nombre de rayons envoyés == nombre de colonnes affichées sur l'écran
 RAY_SENSI = fov_r / nb_LINE  # Angle entre chaque rayon du raycaster
 MAX_DEPTH = TS * max_check  # En fonction de la distance d'affichages, c'est la taille maximum d'un rayon
@@ -56,11 +56,7 @@ C_w, C_h = crosshair_size * C_w, crosshair_size * C_h  # On redimentionne sa tai
 Crosshair = pg.transform.scale(crosshair, (C_w, C_h))  # Puis on scale l'objet pygame
 Crosshair_coord = (MID_POINT[0] - m.floor(C_w / 2), MID_POINT[1] - m.floor(C_h / 2))  # Calcul de la bonne position
 
-# Autres
-MAP_SIZE = map["map size"]
-WDW_SIZE = TS * MAP_SIZE  # Combien de place prend la map en pixel
-HEIGHT = 0  # Variable pour definir la hauteur de la souris, permet de regarder en bas et en haut
-angle = m.radians(90)  # pour alléger le code lors de calcul du deplacement droite/gauche
+# Initialisation des textures
 
 wall_textures = [  # Chaque element a pour forme (objet pygame du la texture, résolution de la texture)
     (pg.image.load("Assets/walls/wall.png").convert(), 32),
@@ -70,11 +66,14 @@ wall_textures = [  # Chaque element a pour forme (objet pygame du la texture, r�
     (pg.image.load("Assets/walls/blue_wall.png").convert(), 225)
 
 ]
-mouse = pg.mouse
 background = pg.image.load("Assets/GUI/background.png").convert()  # image de fond du menu d'accueil
+
+
+# Autres
+MAP_SIZE = map["map size"]
+WDW_SIZE = TS * MAP_SIZE  # Combien de place prend la map en pixel
+HEIGHT = 0  # Variable pour definir la hauteur de la souris, permet de regarder en bas et en haut
+angle = m.radians(90)  # pour alléger le code lors de calcul du deplacement droite/gauche
+mouse = pg.mouse
 clock = pg.time.Clock()
 
-
-max_height = 50
-min_height = -50
-cam_mouv = 1
