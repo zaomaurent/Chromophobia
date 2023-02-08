@@ -1,10 +1,7 @@
-import math as m
-import pygame as pg
-import sys
+import time as t
 
 # Import des autres fonctions du programme
 from constantes import *
-from interface import *
 from menu import *
 from mouvement import *
 from raycasting import *
@@ -55,12 +52,14 @@ while running:
         player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, HEIGHT, player_x, player_y,
                                                                    player_rotation)
         mid = (tailleY / 2) + HEIGHT
+        start = t.time()
         pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
         pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
         dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)
         Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list)
         draw_minimap()
         draw_object()
+        end = t.time()
         screen.blit(Crosshair, Crosshair_coord)
     pg.display.flip()
     clock.tick(60)

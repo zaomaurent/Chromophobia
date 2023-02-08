@@ -61,8 +61,6 @@ def Menu():
                         return
                     elif index == 1 and anti_spam:
                         Parametres(background)
-                        mouse.set_visible(False)
-                        return
                     elif index == 2 and anti_spam:
                         sys.exit()
                         return
@@ -81,7 +79,7 @@ def Parametres(background):
         [32, 178, 250, 201],
         [32, 247, 274, 272],
         [32, 317, 190, 341],
-        [32, 380, 182, 404]
+        [32, 385, 211, 410]
     ]
 
     settings_running = True
@@ -107,7 +105,7 @@ def Parametres(background):
                     elif index == 3 and anti_spam:
                         print("Succes")
                     elif index == 4 and anti_spam:
-                        print("Close")
+                        return
 
         screen.fill((0, 0, 0))
         screen.blit(background, (0, 0))
@@ -152,6 +150,7 @@ def Pause():
                         mouse.set_pos(MID_POINT)
                     elif index == 1:
                         Parametres(background)
+                        return
                     elif index == 2:
                         print("Maps")
                     elif index == 3:

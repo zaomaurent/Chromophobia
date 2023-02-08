@@ -26,7 +26,7 @@ mouse_coef = m.radians(90) * (mouse_speed / tailleX)  # --> Coeficient utilisé 
 crosshair_path = "Assets/crosshair.png"  # Permet au joueur de choisir son viseur
 crosshair = pg.image.load(crosshair_path)
 crosshair_size = 3  # Taille du viseur
-max_check = 10  # --> Distance d'affichage maximale
+max_check = 6 # --> Distance d'affichage maximale
 
 
 # Constantes
