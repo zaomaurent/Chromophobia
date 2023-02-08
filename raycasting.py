@@ -105,7 +105,6 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, 
 
     # Correction de l'effet de distortion
     distance *= m.cos(RayAngle - player_rotation)
-    # color = 255 - ((distance / MAX_DEPTH) * 255)
 
     if distance < MAX_DEPTH:
         if distance > 1:
@@ -143,10 +142,18 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, 
         # creation d'une colonne texturée correspondant a la partie du mur touchée
         column = texture.subsurface(slice if slice + SLICE_SIZE <= wall_size else wall_size - SLICE_SIZE, 0, SLICE_SIZE,
                                     wall_size)
+
         # Aggrandisement de cette colonne
+
         column = pg.transform.scale(column, (LINE_SIZE, wall_height))
 
         # Positionnement de la colonne sur la fenetre
         slice_y = (tailleY / 2) - (wall_height // 2)
         screen.blit(column,
-                    (line_index * LINE_SIZE, slice_y + HEIGHT))  # Affichage prennant en compte le mouv de la souris
+                    (line_index * LINE_SIZE, slice_y + HEIGHT))  # Affichage prennant en compte le mouv de la souris# création du fog
+
+        color = ((distance / MAX_DEPTH) * 255)
+        filtre = pg.Surface(column.get_size())
+        filtre.fill((0, 0, 0))
+        filtre.set_alpha(color)
+        screen.blit(filtre, (line_index * LINE_SIZE, slice_y + HEIGHT))

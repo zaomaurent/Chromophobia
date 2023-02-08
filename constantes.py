@@ -69,6 +69,8 @@ wall_textures = [  # Chaque element a pour forme (objet pygame du la texture, r√
 background = pg.image.load("Assets/GUI/background.png").convert()  # image de fond du menu d'accueil
 
 
+
+
 # Autres
 MAP_SIZE = map["map size"]
 WDW_SIZE = TS * MAP_SIZE  # Combien de place prend la map en pixel
