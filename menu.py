@@ -31,15 +31,14 @@ def dark_bg(alpha):  # Pour rendre le fond plus sombre
     pg.display.flip()
 
 
-
 def Menu():
     mouse.set_visible(True)
     debut = time.time()
     Menu_Button = [
-        [420, 221, 1179, 374],
-        [450, 221, 1146, 552],
-        [562, 555, 1038, 652],
-        [0, 745, 372, 800]
+        (420, 221, 1179, 374),
+        (450, 221, 1146, 552),
+        (562, 555, 1038, 652),
+        (0, 745, 372, 800)
     ]
 
     menu = pg.image.load("Assets/GUI/menu.png")
@@ -51,19 +50,20 @@ def Menu():
 
         get_clicked = mouse.get_pressed()
         if get_clicked[0]:
-            ex, ey = mouse.get_pos()
+            mx, my = mouse.get_pos()
             for index, button in enumerate(Menu_Button):
                 anti_spam = time.time() - debut > 0.75
-                if IsClicked(button, ex, ey, 0, 0):
+                if IsClicked(button, mx, my):
                     if index == 0 and anti_spam:
-                        FonduIn()
-                        mouse.set_visible(False)
-                        return
+                        if not Modes_De_Jeu(background):  # es ce que le joueur est allé en partie ou est revenu au menu
+                            FonduIn()
+                            mouse.set_visible(False)
+                            return
+
                     elif index == 1 and anti_spam:
                         Parametres(background)
                     elif index == 2 and anti_spam:
                         sys.exit()
-                        return
                     elif index == 3:
                         webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
         screen.blit(background, (0, 0))
@@ -71,21 +71,56 @@ def Menu():
         pg.display.flip()
 
 
+def Modes_De_Jeu(background):
+    buttons = [
+        (616, 336, 995, 370),
+        (616, 426, 995, 470),
+        (0, 0, 136, 67)
+    ]
+    GUI = pg.image.load("Assets/GUI/games_modes.png")
+    clicked = False
+    debut = time.time()
+    while True:
+        clock.tick(60)
+
+        for e in pg.event.get():
+            if not ExitWindow(e):  # Si l'utilisateur ferme la fenetre
+                sys.exit()
+            if e.type == pg.MOUSEBUTTONDOWN:
+                clicked = True
+            else:
+                clicked = False
+        if clicked:
+            mx, my = mouse.get_pos()
+            for index, button in enumerate(buttons):
+                anti_spam = time.time() - debut > 0.75
+                if anti_spam:
+                    if IsClicked(button, mx, my):
+                        if index == 0:
+                            return False
+                        if index == 1:
+                            print("Map Creator")
+                        if index == 2:
+                            return True
+        screen.fill((0, 0, 0))
+        screen.blit(background, (0, 0))
+        screen.blit(GUI, (0, 0))
+        pg.display.flip()
+
+
 def Parametres(background):
     mouse.set_visible(True)
     debut = time.time()
     settings_button = [
-        [32, 109, 149, 132],
-        [32, 178, 250, 201],
-        [32, 247, 274, 272],
-        [32, 317, 190, 341],
-        [32, 385, 211, 410]
+        (32, 109, 149, 132),
+        (32, 178, 250, 201),
+        (32, 247, 274, 272),
+        (32, 317, 190, 341),
+        (32, 385, 211, 410)
     ]
-
-    settings_running = True
     settings = pg.image.load("Assets/GUI/parametres.png")
 
-    while settings_running:
+    while True:
         get_clicked = False
         for event in pg.event.get():
             settings_running = ExitWindow(event)
@@ -96,16 +131,17 @@ def Parametres(background):
             anti_spam = time.time() - debut > 1.5
             for index, button in enumerate(settings_button):
                 if IsClicked(button, ex, ey):
-                    if index == 0 and anti_spam:
-                        print("Audio")
-                    elif index == 1 and anti_spam:
-                        print("Graphique")
-                    elif index == 2 and anti_spam:
-                        print("Cmds")
-                    elif index == 3 and anti_spam:
-                        print("Succes")
-                    elif index == 4 and anti_spam:
-                        return
+                    if anti_spam:
+                        if index == 0:
+                            print("Audio")
+                        elif index == 1:
+                            print("Graphique")
+                        elif index == 2:
+                            print("Cmds")
+                        elif index == 3:
+                            print("Succes")
+                        elif index == 4:
+                            return
 
         screen.fill((0, 0, 0))
         screen.blit(background, (0, 0))
@@ -117,11 +153,11 @@ def Parametres(background):
 def Pause():
     mouse.set_visible(True)
     Button_Coord = [
-        [15, 17, 788, 144],
-        [15, 166, 788, 288],
-        [15, 314, 380, 436],
-        [422, 314, 787, 436],
-        [15, 463, 787, 585],
+        (15, 17, 788, 144),
+        (15, 166, 788, 288),
+        (15, 314, 380, 436),
+        (422, 314, 787, 436),
+        (15, 463, 787, 585),
     ]
     menu_pause = pg.image.load("Assets/GUI/button.png")
     x, y, h, w = (tailleX / 4), (tailleY / 8), (tailleX / 2), ((tailleY / 8) * 6)
