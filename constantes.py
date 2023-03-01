@@ -1,8 +1,13 @@
 import pygame as pg
 import math as m
+import time as t
 
 from maps import maps
 from players import players
+
+
+pg.init()
+pg.mixer.init()
 
 
 # Appel de fonctions
@@ -12,7 +17,7 @@ TS = map["tile size"]
 tailleX, tailleY = 1600, 800  # Taille de l'écran en x et y (width et height)
 running = True
 
-pg.init()
+
 screen = pg.display.set_mode((tailleX, tailleY))
 pg.display.set_caption("Raycasting")
 
@@ -79,3 +84,14 @@ angle = m.radians(90)  # pour alléger le code lors de calcul du deplacement dro
 mouse = pg.mouse
 clock = pg.time.Clock()
 
+weapons = {
+    "gun": {
+        "speed": 10000000,
+        "damage": 50,
+        "sound": pg.mixer.Sound("Assets/Sons/blaster.ogg")
+    }
+}
+
+weapon = "gun"
+
+last_shot = 1
