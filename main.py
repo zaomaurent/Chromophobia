@@ -1,21 +1,12 @@
 import time as t
-
+import pygame as pg
 # Import des autres fonctions du programme
 from constantes import *
 from menu import *
 from mouvement import *
 from raycasting import *
 from sprites import *
-
-
-def draw_object():
-    for sprite in sprites.values():
-        pg.draw.circle(screen, (0, 120, 200), sprite["position"], 4)
-
-    #  Joueur
-    pg.draw.circle(screen, (255, 0, 0), (player_x, player_y), 4)
-    pg.draw.line(screen, (255, 0, 0), (player_x, player_y),
-                 (player_x - 25 * m.sin(player_rotation), player_y - 25 * m.cos(player_rotation)))
+import Sons as son
 
 
 def draw_minimap():
@@ -27,8 +18,9 @@ def draw_minimap():
                 (x * TS, y * TS, TS, TS)
             )
 
-
+volume = son.init()
 Menu()
+son.f_music(volume)
 
 # Game Loop
 while running:
@@ -40,7 +32,9 @@ while running:
         ExitWindow(event)
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:  # Si le joueur veut faire pause
+                son.sound_effects(0)
                 Pause()
+                son.sound_effects(volume)
                 mouse.set_visible(False)
 
     # screen.fill((0, 0, 0))
@@ -56,7 +50,8 @@ while running:
         pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
         pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
         dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)
-        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list)
+        son.sound_effects(volume)
+        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot)
         draw_minimap()
         draw_object()
         end = t.time()
@@ -64,4 +59,5 @@ while running:
     pg.display.flip()
     clock.tick(60)
 
+pg.mixer.quit()
 pg.quit()
