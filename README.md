@@ -29,6 +29,7 @@ souris,parametres)
 
 portail : a faire avec un sprite sur unbloc entier
 portail a detourer : https://i.ytimg.com/vi/Z6GxQ9Kr8i4/maxresdefault.jpg
+
 NPC : créer un dialogue pour un npc au début du jeu qui eplique l'histoire, cliquer pour changer le texte de son dialogue perso (if clicked == 1: if clicked == 2: et afficher les differents textes)a faire avec un sprite
 
 porte : a faire dans un mur (en tant que bloc) avec un num special
