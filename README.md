@@ -26,3 +26,6 @@ souris,parametres)
 - Créer des easters egg(puissance 4, rick roll, ..)
 
 - Créer des modes de jeu (solo,combats contre mobs,1v1)
+
+
+portail a detourer : https://i.ytimg.com/vi/Z6GxQ9Kr8i4/maxresdefault.jpg
