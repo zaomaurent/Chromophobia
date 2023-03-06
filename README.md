@@ -23,7 +23,7 @@ To-do list:
 - Avoir des interactions entre le perso et son environnement (NPC,portails entre 2 mondes/salles,ouverture de portes) -interface de joueur (inventaire,curseur 
 souris,parametres)
 
-- Créer des easters egg(puissance 4, rick roll, ..)
+- Créer des easters egg(puissance 4, rick roll, ..) -> ajouter un NPC pour acceder au puissance 4 et cacher le rick roll dans un bouton 
 
 - Créer des modes de jeu (solo,combats contre mobs,1v1)
 
