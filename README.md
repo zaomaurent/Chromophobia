@@ -20,6 +20,8 @@ To-do list:
 
 - Le personnage est capable d'avoir des collisions (ne pas rentrer dans les murs)
 
+- création d'une ATH pour aficher les HP, les armes et les munitions (image reliée a des keys pour switch les armes)
+
 - Avoir des interactions entre le perso et son environnement (NPC,portails entre 2 mondes/salles,ouverture de portes) -interface de joueur (inventaire,curseur 
 souris,parametres)
 
