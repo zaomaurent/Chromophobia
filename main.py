@@ -9,7 +9,7 @@ from sprites import *
 import Sons as son
 from weapons import*
 
-def draw_minimap():
+def draw_minimap(): # fonction qui positionne la minimap ou se deplace le joueur en haut a gauche
     for y, line in enumerate(map["map"]):
         for x, column in enumerate(line):
             pg.draw.rect(
@@ -19,7 +19,7 @@ def draw_minimap():
             )
 
 volume = son.init()
-Menu()
+Menu()                  # fonctions principales séparée du game loop
 son.f_music(volume)
 
 # Game Loop
@@ -31,9 +31,9 @@ while running:
     for event in pg.event.get():
         ExitWindow(event)
         if event.type == pg.KEYDOWN:
-            if event.key == pg.K_ESCAPE:  # Si le joueur veut faire pause
+            if event.key == pg.K_ESCAPE:  # Si le joueur veut faire pause 
                 son.sound_effects(0)
-                Pause()
+                Pause() # affiche le menu pause 
                 son.sound_effects(volume)
                 mouse.set_visible(False)
 
@@ -51,14 +51,14 @@ while running:
         pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
         dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)
         son.sound_effects(volume)
-        change_weapon(weapon)
-        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot)
+        change_weapon(weapon) # echanger entre 2 armes avec les touches du clavier
+        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot) # fonction d'affichage des sprites
         draw_minimap()
         draw_object()
         end = t.time()
-        screen.blit(Crosshair, Crosshair_coord)
+        screen.blit(Crosshair, Crosshair_coord) # affichage de l'arme
     pg.display.flip()
     clock.tick(60)
 
 pg.mixer.quit()
-pg.quit()
+pg.quit() # ferme la boucle de jeu et donc la fenetre
