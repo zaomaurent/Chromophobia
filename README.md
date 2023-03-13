@@ -29,11 +29,13 @@ souris,parametres)
 
 - Créer des modes de jeu (solo,combats contre mobs,1v1)
 
-portail : a faire avec un sprite sur unbloc entier
+- portail : a faire avec un sprite sur unbloc entier
 portail a detourer : https://i.ytimg.com/vi/Z6GxQ9Kr8i4/maxresdefault.jpg
 
-NPC : créer un dialogue pour un npc au début du jeu qui eplique l'histoire, cliquer pour changer le texte de son dialogue perso (if clicked == 1: if clicked == 2: et afficher les differents textes)a faire avec un sprite pnj : a modifier les couleurs https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStwfsCvdHyFPuOxIO-lzDSnybsdXYo6-OGMirlFu9IvFMfLQFBIkYRv2o7iXXN5YrKN7M&usqp=CAU
+- NPC : créer un dialogue pour un npc au début du jeu qui eplique l'histoire, cliquer pour changer le texte de son dialogue perso (if clicked == 1: if clicked == 2: et afficher les differents textes)a faire avec un sprite pnj : a modifier les couleurs https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStwfsCvdHyFPuOxIO-lzDSnybsdXYo6-OGMirlFu9IvFMfLQFBIkYRv2o7iXXN5YrKN7M&usqp=CAU
 
-porte : a faire dans un mur (en tant que bloc) avec un num special
+- porte : a faire dans un mur (en tant que bloc) avec un num special
 
-interface de joueur : a faire comme les parametres mais avec l'interface de minecraft
+- interface de joueur : a faire comme les parametres mais avec l'interface de minecraft
+
+- faire les commentaires du code (explications des fonctions)
