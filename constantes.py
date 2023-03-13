@@ -96,6 +96,6 @@ weapons = {
     }
 }
 
-weapon = "gun"
+weapon = 1
 
 last_shot = 1
