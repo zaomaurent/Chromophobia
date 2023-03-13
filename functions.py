@@ -7,7 +7,7 @@ from constantes import *
 from maps import maps
 
 
-def ExitWindow(event):
+def ExitWindow(event): # fonction qui fait quitter le jeu si le joueur appuye sur quit (boutton defini par ses dimensions)
     if event.type == pg.QUIT:
         pg.quit()
         sys.exit()
@@ -41,10 +41,10 @@ def InMap(coord):
 
 
 def Distance(a, b):
-    return m.sqrt((a ** 2 + b ** 2))
+    return m.sqrt((a ** 2 + b ** 2)) # theoreme de pythagore (calcul de l'hypothenus)
 
 
-def Verif_Angle(angle, mode):
+def Verif_Angle(angle, mode): # fonction qui verifie si l'angle est entre 0 et 360 degrès et qui recale sinon
     if mode == "rad":
         angle = m.degrees(angle)
     if angle < 0:
