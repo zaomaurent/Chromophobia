@@ -32,6 +32,16 @@ sprites = {
         "ratio": 1,
         "position": (37, 37),
         "class": "neutral"
+    },
+    
+    "4"{
+        "texture": pg.image.load("Assets/Sprites/greenlight.png"),
+        "height": 64,
+        "width": 64,
+        "ratio": 1,
+        "position": (0,0),
+        "class": "NPC"
+    
     }
 }
 coef_angle_tailleX = tailleX / fov_r
