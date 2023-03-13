@@ -129,6 +129,6 @@ def attack(weapon, sprite_angle, damage):
 
 
 
-    if t.time()-last_shot <= speed and -0.05 <= sprite_angle <= 0.05 and sprite["class"] == "ennemy":
+    if -0.05 <= sprite_angle <= 0.05 and sprite["class"] == "ennemy":
         sprite["HP"] -= damage
         print("hit")
