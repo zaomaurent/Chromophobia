@@ -37,3 +37,8 @@ def gun_sound(weapon, volume):
     global weapons
     weapons[weapon]["sound"].set_volume(volume)
     weapons[weapon]["sound"].play()
+
+def gun_reload(weapon, volume):
+    sound = pg.mixer.Sound("Assets/Sons/reload.ogg")
+  sound.set_volume(volume)
+  sound.play()
