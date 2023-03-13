@@ -90,6 +90,9 @@ weapons = {
         "damage": 50,
         "sound": pg.mixer.Sound("Assets/Sons/blaster.ogg"),
         "name": "gun"
+    },
+    
+    2{
     }
 }
 
