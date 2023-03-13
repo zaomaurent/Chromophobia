@@ -37,28 +37,27 @@ while running:
                 son.sound_effects(volume)
                 mouse.set_visible(False)
 
-    # screen.fill((0, 0, 0))
+   
 
     if mouse.get_focused():
         from constantes import speed
 
-        # speed = speed * (60/clock.get_fps())
         player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, HEIGHT, player_x, player_y,
                                                                    player_rotation)
         mid = (tailleY / 2) + HEIGHT
         start = t.time()
         pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
-        pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
-        dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)
-        son.sound_effects(volume)
-        change_weapon(weapon) # echanger entre 2 armes avec les touches du clavier
-        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot) # fonction d'affichage des sprites
-        draw_minimap()
-        draw_object()
+        pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))    #Affichage de 2 rectangles représentant le sol et le plafond de 2 couleurs différentes
+        dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)  #Appel de la fonction du raycasting (calcul des distances pour l'affichage)
+        son.sound_effects(volume)   #Appel de la fonction des bruitages
+        change_weapon(weapon) #Echanger entre 2 armes avec les touches du clavier
+        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot) #Fonction d'affichage des sprites
+        draw_minimap()  #Affichage de la minimap en haut à gauche
+        draw_object()   #Affichage de la position des ennemis sur la minimap
         end = t.time()
-        screen.blit(Crosshair, Crosshair_coord) # affichage de l'arme
+        screen.blit(Crosshair, Crosshair_coord) #Affichage du viseur
     pg.display.flip()
     clock.tick(60)
 
 pg.mixer.quit()
-pg.quit() # ferme la boucle de jeu et donc la fenetre
+pg.quit() #Ferme la boucle de jeu et donc la fenetre
