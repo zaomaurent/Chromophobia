@@ -47,34 +47,8 @@ sprites = {
 coef_angle_tailleX = tailleX / fov_r
 max_height = tailleY * 1.5
 
-
-def Sprite_angle(player_x, player_y, sprite_x, sprite_y):
-    base_angle = m.atan(abs(sprite_x - player_x) / abs(sprite_y - player_y))
-
-    if player_x > sprite_x and player_y > sprite_y:
-        return base_angle
-
-    elif player_x > sprite_x and player_y < sprite_y:
-        return m.radians(180) - base_angle
-
-    elif player_x < sprite_x and player_y > sprite_y:
-        return m.radians(360) - base_angle
-
-    elif player_x < sprite_x and player_y < sprite_y:
-        return m.radians(180) + base_angle
-
-
-def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot):
-    global weapon, sprite
-    # Fonction pour afficher les sprites
-    for sprite in sprites.values():
-        sprite_x, sprite_y = sprite["position"]
-        sprite_angle = Sprite_angle(player_x, player_y, sprite_x, sprite_y)
-        sp_pl_angle = sprite_angle - player_rotation
-        fov_plus, fov_moins = HALF_FOV, - HALF_FOV
-
-
-        # Angle opposé au joueur
+def Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot):
+    # Angle opposé au joueur
         if fov_moins <= sp_pl_angle <= fov_plus:
 
             if sprite["class"] == "ennemy":
@@ -117,6 +91,43 @@ def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_
             attack(weapon, sp_pl_angle,damage)
             gun_sound(weapon, volume)
             last_shot = t.time()
+
+
+    return last_shot
+
+
+
+def Sprite_angle(player_x, player_y, sprite_x, sprite_y):
+    base_angle = m.atan(abs(sprite_x - player_x) / abs(sprite_y - player_y))
+
+    if player_x > sprite_x and player_y > sprite_y:
+        return base_angle
+
+    elif player_x > sprite_x and player_y < sprite_y:
+        return m.radians(180) - base_angle
+
+    elif player_x < sprite_x and player_y > sprite_y:
+        return m.radians(360) - base_angle
+
+    elif player_x < sprite_x and player_y < sprite_y:
+        return m.radians(180) + base_angle
+
+
+def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot):
+    global weapon, sprite
+    # Fonction pour afficher les sprites
+    for sprite in sprites.values():
+        sprite_x, sprite_y = sprite["position"]
+        sprite_angle = Sprite_angle(player_x, player_y, sprite_x, sprite_y)
+        sp_pl_angle = sprite_angle - player_rotation
+        fov_plus, fov_moins = HALF_FOV, - HALF_FOV
+
+        if sprite["class"] == "ennemy":
+            if sprite["HP"] > 0:
+                last_shot = Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot)
+                
+        else: 
+            last_shot = Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot)
 
 
     return last_shot
