@@ -85,10 +85,11 @@ mouse = pg.mouse
 clock = pg.time.Clock()
 
 weapons = {
-    "gun": {
+    1: {
         "speed": 10000000,
         "damage": 50,
-        "sound": pg.mixer.Sound("Assets/Sons/blaster.ogg")
+        "sound": pg.mixer.Sound("Assets/Sons/blaster.ogg"),
+        "name": "gun"
     }
 }
 
