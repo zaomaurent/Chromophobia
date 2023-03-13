@@ -7,7 +7,7 @@ from mouvement import *
 from raycasting import *
 from sprites import *
 import Sons as son
-
+from weapons import*
 
 def draw_minimap():
     for y, line in enumerate(map["map"]):
@@ -51,6 +51,7 @@ while running:
         pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
         dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)
         son.sound_effects(volume)
+        change_weapon(weapon)
         Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot)
         draw_minimap()
         draw_object()
