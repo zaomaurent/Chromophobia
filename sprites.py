@@ -34,7 +34,7 @@ sprites = {
         "class": "neutral"
     },
     
-    "4"{
+    "4": {
         "texture": pg.image.load("Assets/Sprites/greenlight.png"),
         "height": 64,
         "width": 64,
@@ -47,13 +47,13 @@ sprites = {
 coef_angle_tailleX = tailleX / fov_r
 max_height = tailleY * 1.5
 
-def Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot):
-    # Angle opposé au joueur
+def Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot, fov_moins, fov_plus, sp_pl_angle, sprite_x, sprite_y, weapon):
+
+        viewed_sprite = False
+
         if fov_moins <= sp_pl_angle <= fov_plus:
 
             if sprite["class"] == "ennemy":
-
-                print(sprite["HP"])
 
                 if sprite["HP"]!=0:
                     column = int(abs(coef_angle_tailleX * (sp_pl_angle - HALF_FOV)))
@@ -67,6 +67,8 @@ def Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume
                         sprite_width = sprite_height * sprite["ratio"]
                         scaled_sprite = pg.transform.scale(sprite["texture"], (sprite_width, sprite_height))
                         screen.blit(scaled_sprite, (column - sprite_width // 2, (tailleY / 2) - (sprite_height // 2) + HEIGHT))
+                        viewed_sprite = True
+
 
             else:
                 column = int(abs(coef_angle_tailleX * (sp_pl_angle - HALF_FOV)))
@@ -80,20 +82,21 @@ def Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume
                     scaled_sprite = pg.transform.scale(sprite["texture"], (sprite_width, sprite_height))
                     screen.blit(scaled_sprite,
                                 (column - sprite_width // 2, (tailleY / 2) - (sprite_height // 2) + HEIGHT))
-
+                    viewed_sprite = True
 
         left, middle, right = pg.mouse.get_pressed()
         speed, damage = weapons[weapon]["speed"], weapons[weapon]["damage"]
 
         if left and t.time() - last_shot >= speed:
 
-            print("shoot")
-            attack(weapon, sp_pl_angle,damage)
-            gun_sound(weapon, volume)
-            last_shot = t.time()
+            gun_sound(weapons[weapon]["sound"], weapons[weapon]["volume"])
 
+            if viewed_sprite:
+                attack(sp_pl_angle,damage)
+                last_shot = t.time()
+                print(last_shot)
 
-    return last_shot
+        return last_shot
 
 
 
@@ -113,8 +116,8 @@ def Sprite_angle(player_x, player_y, sprite_x, sprite_y):
         return m.radians(180) + base_angle
 
 
-def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot):
-    global weapon, sprite
+def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot, weapon):
+    global sprite
     # Fonction pour afficher les sprites
     for sprite in sprites.values():
         sprite_x, sprite_y = sprite["position"]
@@ -124,10 +127,10 @@ def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_
 
         if sprite["class"] == "ennemy":
             if sprite["HP"] > 0:
-                last_shot = Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot)
+                last_shot = Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot, fov_moins, fov_plus, sp_pl_angle, sprite_x, sprite_y, weapon)
                 
         else: 
-            last_shot = Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot)
+            last_shot = Sprite_calcul(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot, fov_moins, fov_plus, sp_pl_angle, sprite_x, sprite_y, weapon)
 
 
     return last_shot
@@ -144,11 +147,8 @@ def draw_object():
                  (player_x - 25 * m.sin(player_rotation), player_y - 25 * m.cos(player_rotation)))
 
 
-def attack(weapon, sprite_angle, damage):
+def attack(sprite_angle, damage):
     global sprite
-
-
-
 
     if -0.05 <= sprite_angle <= 0.05 and sprite["class"] == "ennemy":
         sprite["HP"] -= damage
