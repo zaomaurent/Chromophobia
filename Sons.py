@@ -2,12 +2,11 @@ import pygame as pg
 
 from constantes import *
 
+
 def init():
     global music, gun
     music = pg.mixer.Sound("Assets/Sons/music.mp3")
     volume = 0.5
-    gun = pg.mixer.Sound("Assets/Sons/blaster.ogg")
-    gun.set_volume(0.7)
     return volume
 
 
@@ -21,7 +20,6 @@ def f_music(volume):
 
 
 def sound_effects(volume):
-    global gun
 
     key_pressed = pg.key.get_pressed()
 
@@ -33,12 +31,11 @@ def sound_effects(volume):
 
     #music.set_volume(volume)
 
-def gun_sound(weapon, volume):
-    global weapons
-    weapons[weapon]["sound"].set_volume(volume)
-    weapons[weapon]["sound"].play()
+def gun_sound(sound, volume):
+    sound.set_volume(volume)
+    sound.play()
 
 def gun_reload(weapon, volume):
     sound = pg.mixer.Sound("Assets/Sons/reload.ogg")
-  sound.set_volume(volume)
-  sound.play()
+    sound.set_volume(volume)
+    sound.play()
