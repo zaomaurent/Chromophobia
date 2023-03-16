@@ -86,13 +86,19 @@ clock = pg.time.Clock()
 
 weapons = {
     1: {
-        "speed": 10000000,
-        "damage": 50,
+        "speed": 1,
+        "damage": 20,
         "sound": pg.mixer.Sound("Assets/Sons/blaster.ogg"),
-        "name": "gun"
+        "name": "blaster",
+        "volume": 0.25
     },
     
-    2{
+    2: {
+        "speed": 1,
+        "damage": 25,
+        "sound": pg.mixer.Sound("Assets/Sons/gun.ogg"),
+        "name": "gun",
+        "volume": 0.15
     }
 }
 
