@@ -50,8 +50,8 @@ while running:
         pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))    #Affichage de 2 rectangles représentant le sol et le plafond de 2 couleurs différentes
         dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)  #Appel de la fonction du raycasting (calcul des distances pour l'affichage)
         son.sound_effects(volume)   #Appel de la fonction des bruitages
-        change_weapon(weapon) #Echanger entre 2 armes avec les touches du clavier
-        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot) #Fonction d'affichage des sprites
+        weapon = change_weapon(weapon, weapons) #Echanger entre 2 armes avec les touches du clavier
+        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot, weapon) #Fonction d'affichage des sprites
         draw_minimap()  #Affichage de la minimap en haut à gauche
         draw_object()   #Affichage de la position des ennemis sur la minimap
         end = t.time()
