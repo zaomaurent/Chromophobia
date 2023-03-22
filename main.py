@@ -1,5 +1,6 @@
 import time as t
 import pygame as pg
+
 # Import des autres fonctions du programme
 from constantes import *
 from menu import *
@@ -7,7 +8,8 @@ from mouvement import *
 from raycasting import *
 from sprites import *
 import Sons as son
-from weapons import*
+from weapons import *
+from ATH import *
 
 def draw_minimap(): # fonction qui positionne la minimap ou se deplace le joueur en haut a gauche
     for y, line in enumerate(map["map"]):
@@ -43,7 +45,7 @@ while running:
         from constantes import speed
 
         player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, HEIGHT, player_x, player_y,
-                                                                   player_rotation)
+                                                                    player_rotation)
         mid = (tailleY / 2) + HEIGHT
         start = t.time()
         pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
@@ -51,10 +53,11 @@ while running:
         dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)  #Appel de la fonction du raycasting (calcul des distances pour l'affichage)
         son.sound_effects(volume)   #Appel de la fonction des bruitages
         weapon = change_weapon(weapon, weapons) #Echanger entre 2 armes avec les touches du clavier
-        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot, weapon) #Fonction d'affichage des sprites
+        last_shot = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot, weapon, map["sprites"]) #Fonction d'affichage des sprites
         draw_minimap()  #Affichage de la minimap en haut à gauche
-        draw_object()   #Affichage de la position des ennemis sur la minimap
+        draw_object(map["sprites"], player_x, player_y, player_rotation)   #Affichage de la position des ennemis sur la minimap
         end = t.time()
+        HP_indicator(50)
         screen.blit(Crosshair, Crosshair_coord) #Affichage du viseur
     pg.display.flip()
     clock.tick(60)
