@@ -19,7 +19,7 @@ def MouseMotion(HEIGHT, player_rotation):
     return HEIGHT, player_rotation
 
 
-def Collision():
+def Collision(): # verification des coordonés du joueur (si il est en train d'aller dans un mur)
     hitbox = {
         "top_left": (player_x - current_speed, player_y - current_speed),
         "top_right": (player_x + current_speed, player_y - current_speed),
@@ -49,8 +49,7 @@ def Deplacements(current_speed, speed, HEIGHT, player_x, player_y, player_rotati
     g_x, g_y = current_speed * m.sin(player_rotation - angle), current_speed * m.cos(player_rotation - angle)  # Gauche
 
     # if not Collision():
-    if get_pressed[pg.K_z] and Verif(player_x - plus_x, player_y - plus_y, map_number):  # Si la case n'est
-        # pas un mur
+    if get_pressed[pg.K_z] and Verif(player_x - plus_x, player_y - plus_y, map_number):  # Si la case n'est pas un mur
         player_x, player_y = player_x - plus_x, player_y - plus_y
 
     if get_pressed[pg.K_s] and Verif(player_x + plus_x, player_y + plus_y, map_number):

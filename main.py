@@ -1,4 +1,5 @@
 import time as t
+import pygame as pg
 
 # Import des autres fonctions du programme
 from constantes import *
@@ -6,19 +7,11 @@ from menu import *
 from mouvement import *
 from raycasting import *
 from sprites import *
+import Sons as son
+from weapons import *
+from ATH import *
 
-
-def draw_object():
-    for sprite in sprites.values():
-        pg.draw.circle(screen, (0, 120, 200), sprite["position"], 4)
-
-    #  Joueur
-    pg.draw.circle(screen, (255, 0, 0), (player_x, player_y), 4)
-    pg.draw.line(screen, (255, 0, 0), (player_x, player_y),
-                 (player_x - 25 * m.sin(player_rotation), player_y - 25 * m.cos(player_rotation)))
-
-
-def draw_minimap():
+def draw_minimap(): # fonction qui positionne la minimap ou se deplace le joueur en haut a gauche
     for y, line in enumerate(map["map"]):
         for x, column in enumerate(line):
             pg.draw.rect(
@@ -27,8 +20,9 @@ def draw_minimap():
                 (x * TS, y * TS, TS, TS)
             )
 
-
-Menu()
+volume = son.init()
+Menu()                  # fonctions principales séparée du game loop
+son.f_music(volume)
 
 # Game Loop
 while running:
@@ -39,29 +33,34 @@ while running:
     for event in pg.event.get():
         ExitWindow(event)
         if event.type == pg.KEYDOWN:
-            if event.key == pg.K_ESCAPE:  # Si le joueur veut faire pause
-                Pause()
+            if event.key == pg.K_ESCAPE:  # Si le joueur veut faire pause 
+                son.sound_effects(0)
+                Pause() # affiche le menu pause 
+                son.sound_effects(volume)
                 mouse.set_visible(False)
 
-    # screen.fill((0, 0, 0))
+   
 
     if mouse.get_focused():
         from constantes import speed
 
-        # speed = speed * (60/clock.get_fps())
         player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, HEIGHT, player_x, player_y,
-                                                                   player_rotation)
+                                                                    player_rotation)
         mid = (tailleY / 2) + HEIGHT
         start = t.time()
         pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
-        pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
-        dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)
-        Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list)
-        draw_minimap()
-        draw_object()
+        pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))    #Affichage de 2 rectangles représentant le sol et le plafond de 2 couleurs différentes
+        dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)  #Appel de la fonction du raycasting (calcul des distances pour l'affichage)
+        son.sound_effects(volume)   #Appel de la fonction des bruitages
+        weapon = change_weapon(weapon, weapons) #Echanger entre 2 armes avec les touches du clavier
+        last_shot = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, volume, last_shot, weapon, map["sprites"]) #Fonction d'affichage des sprites
+        draw_minimap()  #Affichage de la minimap en haut à gauche
+        draw_object(map["sprites"], player_x, player_y, player_rotation)   #Affichage de la position des ennemis sur la minimap
         end = t.time()
-        screen.blit(Crosshair, Crosshair_coord)
+        HP_indicator(50)
+        screen.blit(Crosshair, Crosshair_coord) #Affichage du viseur
     pg.display.flip()
     clock.tick(60)
 
-pg.quit()
+pg.mixer.quit()
+pg.quit() #Ferme la boucle de jeu et donc la fenetre
