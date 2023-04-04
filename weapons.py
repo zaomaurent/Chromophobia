@@ -1,4 +1,3 @@
-
 import pygame as pg
 
 def change_weapon(weapon, weapons):

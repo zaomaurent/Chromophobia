@@ -38,7 +38,7 @@ def Deplacements(current_speed, speed, HEIGHT, player_x, player_y, player_rotati
     cos, sin = m.cos(player_rotation), m.sin(player_rotation)
     get_pressed = pg.key.get_pressed()
 
-    if get_pressed[pg.K_LCTRL]:  # Si le joueur cours
+    if get_pressed[pg.K_LSHIFT]:  # Si le joueur cours
         current_speed = speed * 1.5
 
     # Gestion des collision:
