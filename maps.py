@@ -1,7 +1,7 @@
 import pygame as pg
 
 maps = {
-    1: {
+    '1': {
         "map": [                                    # Liste représentant la map en 2D (un chiffre différent de zéro
             [5, 5, 5, 5, 5, 5, 5, 5, 5, 5],         # correspond à l'emplacment d'un mur et à la texture qui lui est associée
             [5, 0, 0, 0, 0, 0, 0, 0, 0, 5],
@@ -72,7 +72,7 @@ maps = {
         }
     },
 
-    2: {
+    '2': {
         "map": [
             [1, 1, 1],
             [1, 0, 1],
@@ -93,9 +93,9 @@ maps = {
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png")
             },
 
-    },
+    },},
 
-    3: {
+    '3': {
         "map":
             [[4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,] ,
             [4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,] ,
@@ -162,4 +162,6 @@ maps = {
         }
     }
 }
-}
+
+
+print(maps['3'])
