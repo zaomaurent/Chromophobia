@@ -3,7 +3,6 @@ import math as m
 import time as t
 
 from maps import maps
-from players import players
 
 
 pg.init()
@@ -11,7 +10,7 @@ pg.mixer.init()
 
 
 # Appel de fonctions
-map_number = 1
+map_number = 3
 map = maps[map_number]
 TS = map["tile size"]
 tailleX, tailleY = 1600, 800  # Taille de l'√©cran en x et y (width et height)
@@ -37,6 +36,14 @@ max_check = 6 # --> Distance d'affichage maximale
 # Constantes
 
 # Pour le joueur
+spawn_point = maps[map_number]["spawn point"]
+players = {
+    1: {
+        "name": "Daniel",
+        "spawn": spawn_point,
+        "base rotation": m.radians(215)
+    }
+}
 player = players[1]
 player_x, player_y = player["spawn"]
 player_rotation = player["base rotation"]
@@ -67,8 +74,8 @@ wall_textures = [  # Chaque element a pour forme (objet pygame du la texture, r√
     (pg.image.load("Assets/walls/wall.png").convert(), 32),
     (pg.image.load("Assets/walls/wall_test.png").convert(), 64),
     (pg.image.load("Assets/walls/wall2.png").convert(), 128),
-    (pg.image.load("Assets/walls/wall_vent.png").convert(), 564),
-    (pg.image.load("Assets/walls/blue_wall.png").convert(), 225)
+    (pg.image.load("Assets/walls/blue_wall.png").convert(), 564),
+    (pg.image.load("Assets/walls/wall_vent.png").convert(), 225)
 
 ]
 background = pg.image.load("Assets/GUI/background.png").convert()  # image de fond du menu d'accueil
@@ -86,7 +93,7 @@ clock = pg.time.Clock()
 
 weapons = {
     1: {
-        "speed": 1,
+        "speed": 0.05,
         "damage": 20,
         "sound": pg.mixer.Sound("Assets/Sons/blaster.ogg"),
         "name": "blaster",
@@ -94,14 +101,13 @@ weapons = {
     },
     
     2: {
-        "speed": 1,
-        "damage": 25,
+        "speed": 0.5,
+        "damage": 50,
         "sound": pg.mixer.Sound("Assets/Sons/gun.ogg"),
         "name": "gun",
-        "volume": 0.15
+        "volume": 0.3
     }
 }
 
 weapon = 1
-
-last_shot = 1
+last_shot = t.time()
