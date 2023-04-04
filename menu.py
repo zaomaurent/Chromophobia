@@ -4,6 +4,7 @@ import sys
 
 from constantes import *
 from functions import ExitWindow
+from map_creator import *
 
 
 def IsClicked(coord, ex, ey, x=0, y=0):
@@ -99,7 +100,7 @@ def Modes_De_Jeu(background):
                         if index == 0:
                             return False
                         if index == 1:
-                            print("Map Creator")
+                            map_creator()
                         if index == 2:
                             return True
         screen.fill((0, 0, 0))

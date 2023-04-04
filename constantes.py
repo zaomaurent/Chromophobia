@@ -10,7 +10,7 @@ pg.mixer.init()
 
 
 # Appel de fonctions
-map_number = 3
+map_number = '3'
 map = maps[map_number]
 TS = map["tile size"]
 tailleX, tailleY = 1600, 800  # Taille de l'écran en x et y (width et height)
@@ -30,7 +30,7 @@ mouse_coef = m.radians(90) * (mouse_speed / tailleX)  # --> Coeficient utilisé 
 crosshair_path = "Assets/crosshair.png"  # Permet au joueur de choisir son viseur
 crosshair = pg.image.load(crosshair_path)
 crosshair_size = 3  # Taille du viseur
-max_check = 6 # --> Distance d'affichage maximale
+max_check = 10  # --> Distance d'affichage maximale
 
 
 # Constantes
@@ -74,8 +74,8 @@ wall_textures = [  # Chaque element a pour forme (objet pygame du la texture, r�
     (pg.image.load("Assets/walls/wall.png").convert(), 32),
     (pg.image.load("Assets/walls/wall_test.png").convert(), 64),
     (pg.image.load("Assets/walls/wall2.png").convert(), 128),
-    (pg.image.load("Assets/walls/blue_wall.png").convert(), 564),
-    (pg.image.load("Assets/walls/wall_vent.png").convert(), 225)
+    (pg.image.load("Assets/walls/blue_wall.png").convert(), 225),
+    (pg.image.load("Assets/walls/wall_vent.png").convert(), 564)
 
 ]
 background = pg.image.load("Assets/GUI/background.png").convert()  # image de fond du menu d'accueil

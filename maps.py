@@ -163,5 +163,3 @@ maps = {
     }
 }
 
-
-print(maps['3'])

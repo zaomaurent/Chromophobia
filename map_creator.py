@@ -4,7 +4,7 @@ from functions import *
 from constantes import *
 
 
-def main():
+def map_creator():
     size = int(input("Quelle est la taille de la map ? : "))
     map = []
     for a in range(size):
@@ -28,6 +28,7 @@ def main():
     CHANGE_MOD = pg.Rect(button_x, button_y, EFFECTIVE_TS * 5, EFFECTIVE_TS)
     QUANTUM = pg.font.Font('Assets\Quantum.otf', 30)
     running = True
+
 
     while running:
         screen.fill((0, 0, 0))
@@ -74,6 +75,3 @@ def main():
         clock.tick(60)
 
     pprint(map, indent=2)
-
-
-main()
