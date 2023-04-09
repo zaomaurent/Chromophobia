@@ -63,7 +63,4 @@ def Deplacements(current_speed, speed, HEIGHT, player_x, player_y, player_rotati
 
     HEIGHT, player_rotation = MouseMotion(HEIGHT, player_rotation)
 
-    if get_pressed[pg.K_1]:
-        player_x, player_y, player_rotation = MAP_SIZE / 2 * TS, MAP_SIZE / 2 * TS, 0
-
     return player_x, player_y, player_rotation, HEIGHT

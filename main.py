@@ -21,6 +21,8 @@ def draw_minimap():  # fonction qui positionne la minimap ou se deplace le joueu
                 (200, 200, 200) if map["map"][y][x] == 0 else (100, 100, 100),
                 (x * TS, y * TS, TS, TS)
             )
+    for sprite in map["sprites"].values():
+        pg.draw.circle(screen, (0, 255, 120), sprite["position"], 3)
 
 
 volume = son.init()

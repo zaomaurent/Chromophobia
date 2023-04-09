@@ -5,7 +5,7 @@ from constantes import *
 from functions import *
 
 
-def RayCalcul(RayAngle, player_x, player_y, player_rotation):
+def RayCalcul(RayAngle, player_x, player_y):
     wall = False
     rot_d = m.degrees(RayAngle)
     sin, cos = m.sin(RayAngle), m.cos(RayAngle)
@@ -22,61 +22,44 @@ def RayCalcul(RayAngle, player_x, player_y, player_rotation):
     elif rot_d > 270 and rot_d != 360:
         rx, ry, d = 1, -1, False
 
-    x_depth = m.floor(player_x / TS) * TS if rx == -1 else m.ceil(player_x / TS) * TS
-    y_depth = m.floor(player_y / TS) * TS if ry == -1 else m.ceil(player_y / TS) * TS
-
-    if RayAngle == 0 or m.degrees(RayAngle) == 180 or m.degrees(RayAngle) == 360:
-        while not wall:
-            y_coord = (player_x, y_depth)
-            if not Verif(y_coord[0], y_coord[1], map_number):
-                return abs(player_y - y_depth - TS) if (RayAngle == 0 or m.degrees(RayAngle) == 360) else abs(
-                    player_y - y_depth), y_coord, "ver"
-            y_depth = UpDepth(ry, y_depth)
-
-    elif RayAngle == m.radians(90) or RayAngle == m.radians(270):
-        while not wall:
-            x_coord = (x_depth, player_y)
-            if not Verif(x_coord[0], x_coord[1], map_number):
-                return abs(player_x - x_depth - TS) if m.degrees(RayAngle) == 90 else abs(
-                    player_x - x_depth), x_coord, "hor"
-            x_depth = UpDepth(rx, x_depth)
-
-    else:
-        d_y, d_x, check_x, check_y, verif_x, verif_y = 0, 0, 0, 0, False, False
-
-        while not verif_x and check_x < max_check:
-            r_coord = player_x - x_depth
-            x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
-            d_x = Distance(r_coord, r_coord * x_slope)
-            verif_x = Check(InMap(x_coord[1]), x_coord)
-            if not verif_x:
-                x_depth = UpDepth(rx, x_depth)
-                check_x += 1
-
-        while not verif_y and check_y < max_check:
-            r_coord = player_y - y_depth
-            y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
-            d_y = Distance(r_coord, r_coord * y_slope)
-            verif_y = Check(InMap(y_coord[1]), y_coord)
-            if not verif_y:
-                y_depth = UpDepth(ry, y_depth)
-                check_y += 1
-
-        # x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
-        # y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
-        if verif_x and not verif_y:
-            return d_x, x_coord, "ver"
-
-        elif verif_y and not verif_x:
-            return d_y, y_coord, "hor"
-
-        elif verif_x and verif_y:
-            if d_x <= d_y:
-                return d_x, x_coord, "ver"
-            else:
-                return d_y, y_coord, "hor"
+    # Raycasting des murs sur l'axe des X <=> |
+    ray_point_x = (
+        m.floor(player_x / TS) * TS if rx == -1 else m.ceil(player_x / TS) * TS,
+        player_y)
+    y_adding = 1 / (
+        m.tan(x_slope))  # Valeur que l'on ajoute au Y a chaque itération de la boucle <=> parcours la grille
+    counter = 0
+    while not wall and counter <= max_check:
+        if Check(True, ray_point_x):
+            x_distance = Distance(player_x - ray_point_x[0], player_y - ray_point_x[1])
+            wall = True
         else:
-            return MAX_DEPTH + 1, False, False
+            ray_point_x = (ray_point_x[0] + 1, ray_point_x[1] + y_adding)
+            x_distance = 0
+
+    # Raycasting des murs sur l'axe des Y <=> ---
+    wall = False
+    ray_point_y = (
+        player_x,
+        m.floor(player_y / TS) * TS if ry == -1 else m.ceil(player_y / TS) * TS)
+    x_adding = 1 / (
+        m.tan(y_slope))  # Valeur que l'on ajoute au Y a chaque itération de la boucle <=> parcours la grille
+    counter = 0
+
+    while not wall and counter <= max_check:
+        if Check(True, ray_point_y):
+            y_distance = Distance(player_x - ray_point_y[0], player_y - ray_point_y[1])
+            wall = True
+        else:
+            ray_point_y = (ray_point_y[0] + x_adding, ray_point_y[1] + 1)
+            y_distance = 0
+
+    if x_distance >= y_distance:
+        return x_distance, ray_point_x, "ver"
+    elif x_distance <= y_distance:
+        return y_distance, ray_point_y, "hor"
+
+
 
 
 def RayCasting(player_x, player_y, player_rotation, HEIGHT):
@@ -92,7 +75,7 @@ def RayCasting(player_x, player_y, player_rotation, HEIGHT):
         # distance : distance au mur le plus proche aligné au rayon
         # wall_part : le rayon arrive sur une partie du mur, exemple: le milieu ou les bord du mur
         # wall_side : pour savoir si le mur touché est un mur de horizontal ou verticale
-        distance, wall_coord, wall_side = RayCalcul(Angle, player_x, player_y, player_rotation)
+        distance, wall_coord, wall_side = RayCalcul(Angle, player_x, player_y)
         dist_list.append(distance)
         if distance < MAX_DEPTH:
             RayDrawing(distance, index, Angle, wall_coord, wall_side, player_x, player_y, player_rotation, HEIGHT)
@@ -150,8 +133,8 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, 
         # Positionnement de la colonne sur la fenetre
         slice_y = (tailleY / 2) - (wall_height // 2)
         screen.blit(column,
-                    (line_index * LINE_SIZE, slice_y + HEIGHT))  # Affichage prennant en compte le mouv de la souris# création du fog
-
+                    (line_index * LINE_SIZE,
+                     slice_y + HEIGHT))  # Affichage prennant en compte le mouv de la souris# création du fog
 
         # Assombrissement des murs en fonction de la distance
         '''color = ((distance / MAX_DEPTH) * 255)

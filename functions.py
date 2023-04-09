@@ -24,8 +24,7 @@ def Check(in_map, coord):
                         return True
                 except:
                     return True
-    else:
-        return False
+    return False
 
 
 def Verif(x_index, y_index, map_number):

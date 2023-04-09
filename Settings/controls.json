@@ -1,0 +1,14 @@
+{
+  "Walk_forwards": {
+    "Z"
+  }
+  "Walk_backwards": {
+    "s"
+  }
+  "Strafe_left": {
+    "q"
+  }
+  "strafe_right": {
+    "d"
+  }
+}

@@ -156,7 +156,7 @@ maps = {
                 "height": 96,
                 "width": 64,
                 "ratio": 64/96,
-                "position": (25.5*5,48*5),
+                "position": (25.5*5, 48*5),
                 "class": "neutral"
             }
         }
