@@ -6,6 +6,6 @@ players = {
     1: {
         "name": "Daniel",
         "spawn": spawn_point,
-        "base rotation": radians(215)
+        "base rotation": radians(0)
     }
 }

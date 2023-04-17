@@ -59,7 +59,7 @@ def Menu():
                         if not Modes_De_Jeu(background):  # es ce que le joueur est allé en partie ou est revenu au menu
                             FonduIn()
                             mouse.set_visible(False)
-                            return
+                            return  # On va ds la boucle principale du jeu => la partie 3d
 
                     elif index == 1 and anti_spam:
                         Parametres(background)
