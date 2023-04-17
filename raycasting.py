@@ -26,8 +26,7 @@ def RayCalcul(RayAngle, player_x, player_y):
     ray_point_x = (
         m.floor(player_x / TS) * TS if rx == -1 else m.ceil(player_x / TS) * TS,
         player_y)
-    y_adding = 1 / (
-        m.tan(x_slope))  # Valeur que l'on ajoute au Y a chaque itération de la boucle <=> parcours la grille
+    y_adding = 1 / (m.tan(x_slope))  # Valeur que l'on ajoute au Y a chaque itération de la boucle
     counter = 0
     while not wall and counter <= max_check:
         if Check(True, ray_point_x):
@@ -36,14 +35,14 @@ def RayCalcul(RayAngle, player_x, player_y):
         else:
             ray_point_x = (ray_point_x[0] + 1, ray_point_x[1] + y_adding)
             x_distance = 0
+            counter += 1
 
     # Raycasting des murs sur l'axe des Y <=> ---
     wall = False
     ray_point_y = (
         player_x,
         m.floor(player_y / TS) * TS if ry == -1 else m.ceil(player_y / TS) * TS)
-    x_adding = 1 / (
-        m.tan(y_slope))  # Valeur que l'on ajoute au Y a chaque itération de la boucle <=> parcours la grille
+    x_adding = 1 / (m.tan(y_slope))  # Valeur que l'on ajoute au Y a chaque itération de la boucle
     counter = 0
 
     while not wall and counter <= max_check:
@@ -53,13 +52,12 @@ def RayCalcul(RayAngle, player_x, player_y):
         else:
             ray_point_y = (ray_point_y[0] + x_adding, ray_point_y[1] + 1)
             y_distance = 0
+            counter += 1
 
     if x_distance >= y_distance:
         return x_distance, ray_point_x, "ver"
     elif x_distance <= y_distance:
         return y_distance, ray_point_y, "hor"
-
-
 
 
 def RayCasting(player_x, player_y, player_rotation, HEIGHT):
@@ -108,6 +106,7 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, 
 
         elif wall_side == "ver":
             if 180 <= rota_deg <= 360 or rota_deg == 0:
+                print(rota_deg, wall_coord)
                 texture_number = map["map"][int(wall_coord[1] / TS)][int(wall_coord[0] / TS + 0.01)] - 1
             else:
                 texture_number = map["map"][int(wall_coord[1] / TS)][int(wall_coord[0] / TS - 0.01)] - 1
