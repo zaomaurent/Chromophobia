@@ -37,9 +37,8 @@ break_timer = color_timer
 change_color = True
 while running:
 
-    if mouse.get_focused():
         mouse.set_visible(False)
-        pg.display.set_caption(f"Raycasting - {int(clock.get_fps())}") # Change le titre de la fenetre avec les fps
+        pg.display.set_caption(f"Chromophobia - FPS : {int(clock.get_fps())}") # Change le titre de la fenetre avec les fps
 
         get_pressed = pg.key.get_pressed()
         if get_pressed[pg.K_ESCAPE] and t.time() - break_timer > 0.5:
@@ -50,51 +49,53 @@ while running:
         for event in pg.event.get():
             ExitWindow(event)
 
-        from constantes import speed
+        if mouse.get_focused():
 
-        # Permet au joueur de se deplacer et de gerer les collisions
-        player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed,
-                                                                   HEIGHT, player_x, player_y,
-                                                                   player_rotation)
-        # calcul du milieu effectif de l'ecran, avc l'angle de vue (haut/bas) du joueur
-        mid = MID_POINT[1] + HEIGHT
+            from constantes import speed
 
-        # Affichage de 2 rectangles représentant le sol et le plafond de 2 couleurs différentes
-        pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
-        pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
+            # Permet au joueur de se deplacer et de gerer les collisions
+            player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed,
+                                                                       HEIGHT, player_x, player_y,
+                                                                       player_rotation)
+            # calcul du milieu effectif de l'ecran, avc l'angle de vue (haut/bas) du joueur
+            mid = MID_POINT[1] + HEIGHT
 
-        # Calcul de la position des murs <=> moteur graphique du jeu, il retourne une liste de distance pour
-        # l'affichage des sprites
-        dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT, wall_color)
+            # Affichage de 2 rectangles représentant le sol et le plafond de 2 couleurs différentes
+            pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
+            pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
 
-        son.sound_effects(volume)  # Appel de la fonction des bruitages
+            # Calcul de la position des murs <=> moteur graphique du jeu, il retourne une liste de distance pour
+            # l'affichage des sprites
+            dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT, wall_color)
 
-        # Echanger entre 2 armes avec les touches du clavier
-        weapon = change_weapon(weapon, weapons)
+            son.sound_effects(volume)  # Appel de la fonction des bruitages
 
-        # Fonction d'affichage des sprites
-        last_shot = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"])
+            # Echanger entre 2 armes avec les touches du clavier
+            weapon = change_weapon(weapon, weapons)
 
-        # Affichage de la minimap en haut à gauche
-        draw_minimap()
+            # Fonction d'affichage des sprites
+            last_shot = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"])
 
-        # Affichage de la position des ennemis sur la minimap
-        draw_object(map["sprites"], player_x, player_y, player_rotation)
+            # Affichage de la minimap en haut à gauche
+            draw_minimap()
 
-        # HP_indicator(50)
+            # Affichage de la position des ennemis sur la minimap
+            draw_object(map["sprites"], player_x, player_y, player_rotation)
 
-        screen.blit(Crosshair, Crosshair_coord)  # Affichage du viseur
+            # HP_indicator(50)
 
-        if change_color:
-            color_timer_difference = t.time() - color_timer
-            if color_timer_difference >= 5:
-                color_timer += color_timer_difference
-                if wall_color != 3:
-                    wall_color += 1
-                else:
-                    wall_color = 0
+            screen.blit(Crosshair, Crosshair_coord)  # Affichage du viseur
 
-            clock.tick(60)
+            if change_color:
+                color_timer_difference = t.time() - color_timer
+                if color_timer_difference >= 10:
+                    color_timer += color_timer_difference
+                    if wall_color != 3:
+                        wall_color += 1
+                    else:
+                        wall_color = 0
+
+        clock.tick(60)
         pg.display.flip()
 
 
