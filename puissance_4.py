@@ -89,10 +89,10 @@ def puissance4():
     longueur=a
     hauteur=y
     couleur='j'
-    alignement_de_4_pions=f_verifcolonne(hauteur,longueur,alignement_de_4_pions,couleur)
-    alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur)
-    alignement_de_4_pions=f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur)
-    alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur)
+    alignement_de_4_pions=f_verifcolonne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
+    alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
+    alignement_de_4_pions=f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
+    alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
     if alignement_de_4_pions==False :
       print("le joueur jaune a gagne")
     pprint(list(reversed(tab)), indent=2)
@@ -111,10 +111,10 @@ def puissance4():
       longueur=b
       hauteur=x
       couleur='r'
-      alignement_de_4_pions=f_verifcolonne(hauteur,longueur,alignement_de_4_pions,couleur)
-      alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur)
-      alignement_de_4_pions=f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur)
-      alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur)    
+      alignement_de_4_pions=f_verifcolonne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
+      alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
+      alignement_de_4_pions=f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
+      alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur,tab)    
       pprint(list(reversed(tab)), indent=2)
       if alignement_de_4_pions==False :
         print("le joueur rouge a gagne")
