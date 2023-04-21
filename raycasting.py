@@ -47,20 +47,20 @@ def RayCalcul(RayAngle, player_x, player_y):
         while not verif_x and check_x < max_check:
             r_coord = player_x - x_depth
             x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
-            d_x = Distance(r_coord, r_coord * x_slope)
             verif_x = Check(InMap(x_coord[1]), x_coord)
             if not verif_x:
                 x_depth = UpDepth(rx, x_depth)
             check_x += 1
+        d_x = Distance(r_coord, r_coord * x_slope)
 
         while not verif_y and check_y < max_check:
             r_coord = player_y - y_depth
             y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
-            d_y = Distance(r_coord, r_coord * y_slope)
             verif_y = Check(InMap(y_coord[1]), y_coord)
             if not verif_y:
                 y_depth = UpDepth(ry, y_depth)
                 check_y += 1
+        d_y = Distance(r_coord, r_coord * y_slope)
 
         # x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
         # y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
@@ -78,7 +78,7 @@ def RayCalcul(RayAngle, player_x, player_y):
         else:
             return MAX_DEPTH + 1, False, False
 
-def RayCasting(player_x, player_y, player_rotation, HEIGHT):
+def RayCasting(player_x, player_y, player_rotation, HEIGHT, wall_color):
     dist_list = []
     for index in range(int(nb_LINE)):
         Angle = player_rotation - index * RAY_SENSI + HALF_FOV
@@ -94,12 +94,12 @@ def RayCasting(player_x, player_y, player_rotation, HEIGHT):
         distance, wall_coord, wall_side = RayCalcul(Angle, player_x, player_y)
         dist_list.append(distance)
         if distance < MAX_DEPTH:
-            RayDrawing(distance, index, Angle, wall_coord, wall_side, player_x, player_y, player_rotation, HEIGHT)
+            RayDrawing(distance, index, Angle, wall_coord, wall_side, player_rotation, HEIGHT, map["map"], wall_color)
 
     return dist_list
 
 
-def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, player_y, player_rotation, HEIGHT):
+def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_rotation, HEIGHT, active_map, wall_color):
     global line_repeat
 
     # Correction de l'effet de distortion
@@ -119,17 +119,17 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_x, 
 
         if wall_side == "hor":
             if 90 < rota_deg < 270:
-                texture_number = map["map"][int(wall_coord[1] / TS + 0.01)][int(wall_coord[0] / TS)] - 1
+                texture_number = active_map[int(wall_coord[1] / TS + 0.01)][int(wall_coord[0] / TS)] - 1
             else:
-                texture_number = map["map"][int(wall_coord[1] / TS - 0.01)][int(wall_coord[0] / TS)] - 1
+                texture_number = active_map[int(wall_coord[1] / TS - 0.01)][int(wall_coord[0] / TS)] - 1
 
         elif wall_side == "ver":
             if 180 <= rota_deg <= 360 or rota_deg == 0:
-                texture_number = map["map"][int(wall_coord[1] / TS)][int(wall_coord[0] / TS + 0.01)] - 1
+                texture_number = active_map[int(wall_coord[1] / TS)][int(wall_coord[0] / TS + 0.01)] - 1
             else:
-                texture_number = map["map"][int(wall_coord[1] / TS)][int(wall_coord[0] / TS - 0.01)] - 1
+                texture_number = active_map[int(wall_coord[1] / TS)][int(wall_coord[0] / TS - 0.01)] - 1
 
-        (texture, wall_size) = wall_textures[texture_number]
+        (texture, wall_size) = wall_textures[wall_color][texture_number]
         SLICE_SIZE = m.ceil((wall_size * LINE_SIZE) / 15000)
 
         # Correction du sens des textures murs. Calculs fait via une texture de fleche pointant vers la droite

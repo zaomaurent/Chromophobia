@@ -32,6 +32,7 @@ Menu()  # fonctions principales séparée du game loop
 son.f_music(volume)
 
 # Game Loop
+color_timer = t.time()
 while running:
 
     mouse.set_visible(False)
@@ -60,8 +61,9 @@ while running:
         pg.draw.rect(screen, (50, 50, 50), (0, 0, tailleX, mid))
         pg.draw.rect(screen, (30, 30, 30), (0, mid, tailleX, tailleY - mid))
 
-        # Calcul de la position des murs <=> moteur graphique du jeu, il retourne une liste de distance pour l'affichage des sprites
-        dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT)
+        # Calcul de la position des murs <=> moteur graphique du jeu, il retourne une liste de distance pour
+        # l'affichage des sprites
+        dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT, wall_color)
 
         son.sound_effects(volume)  # Appel de la fonction des bruitages
 
@@ -80,7 +82,15 @@ while running:
         # HP_indicator(50)
 
         screen.blit(Crosshair, Crosshair_coord)  # Affichage du viseur
+    color_timer_difference = t.time() - color_timer
+    if color_timer_difference >= 5:
+        color_timer += color_timer_difference
+        if wall_color != 3:
+            wall_color += 1
+        else:
+            wall_color = 0
     pg.display.flip()
+
     clock.tick(60)
 
 pg.mixer.quit()
