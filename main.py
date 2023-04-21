@@ -33,21 +33,23 @@ son.f_music(volume)
 
 # Game Loop
 color_timer = t.time()
+break_timer = color_timer
+change_color = True
 while running:
 
-    mouse.set_visible(False)
-    pg.display.set_caption(f"Raycasting - {int(clock.get_fps())}") # Change le titre de la fenetre avec les fps
-
-    for event in pg.event.get():
-        ExitWindow(event)
-        if event.type == pg.KEYDOWN:
-            if event.key == pg.K_ESCAPE:  # Si le joueur veut faire pause 
-                son.sound_effects(0)
-                Pause()  # affiche le menu pause
-                son.sound_effects(volume)
-                mouse.set_visible(False)
-
     if mouse.get_focused():
+        mouse.set_visible(False)
+        pg.display.set_caption(f"Raycasting - {int(clock.get_fps())}") # Change le titre de la fenetre avec les fps
+
+        get_pressed = pg.key.get_pressed()
+        if get_pressed[pg.K_ESCAPE] and t.time() - break_timer > 0.5:
+            change_color = Pause(change_color)  # affiche le menu pause
+            mouse.set_visible(False)
+            break_timer = t.time()
+
+        for event in pg.event.get():
+            ExitWindow(event)
+
         from constantes import speed
 
         # Permet au joueur de se deplacer et de gerer les collisions
@@ -82,16 +84,19 @@ while running:
         # HP_indicator(50)
 
         screen.blit(Crosshair, Crosshair_coord)  # Affichage du viseur
-    color_timer_difference = t.time() - color_timer
-    if color_timer_difference >= 5:
-        color_timer += color_timer_difference
-        if wall_color != 3:
-            wall_color += 1
-        else:
-            wall_color = 0
-    pg.display.flip()
 
-    clock.tick(60)
+        if change_color:
+            color_timer_difference = t.time() - color_timer
+            if color_timer_difference >= 5:
+                color_timer += color_timer_difference
+                if wall_color != 3:
+                    wall_color += 1
+                else:
+                    wall_color = 0
+
+            clock.tick(60)
+        pg.display.flip()
+
 
 pg.mixer.quit()
 pg.quit()  # Ferme la boucle de jeu et donc la fenetre

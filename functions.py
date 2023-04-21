@@ -10,7 +10,6 @@ from maps import maps
 def ExitWindow(event): # fonction qui fait quitter le jeu si le joueur appuye sur quit (boutton defini par ses dimensions)
     if event.type == pg.QUIT:
         pg.quit()
-        sys.exit()
     else:
         return True
 

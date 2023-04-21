@@ -1,4 +1,5 @@
 import time
+import typing
 import webbrowser
 import sys
 
@@ -151,7 +152,7 @@ def Parametres(background):
     return
 
 
-def Pause():
+def Pause(change_color):
     mouse.set_visible(True)
     Button_Coord = [
         (15, 17, 788, 144),
@@ -166,15 +167,14 @@ def Pause():
     inpause = True
 
     dark_bg(220)
+    anti_spam = t.time()
     while inpause:
 
         for event in pg.event.get():
             ExitWindow(event)
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
-                    return
-            pg.display.flip()
-            clock.tick(60)
+                    return change_color
 
         get_clicked = mouse.get_pressed()
         screen.blit(menu_pause, (x, y))
@@ -187,12 +187,21 @@ def Pause():
                         mouse.set_pos(MID_POINT)
                     elif index == 1:
                         Parametres(background)
-                        return
-                    elif index == 2:
-                        print("Maps")
+                        return change_color
+                    elif index == 2 and t.time() - anti_spam >= 1:
+                        anti_spam = t.time()
+                        if change_color:
+                            change_color = False
+                            print("Changement de couleur désactivé" + str(change_color))
+                        else:
+                            change_color = True
+                            print("Changement de couleur activé")
                     elif index == 3:
                         sys.exit()
                     elif index == 4:
                         inpause = False
                         FonduIn()
                         Menu()
+        pg.display.flip()
+        clock.tick(60)
+    return change_color
