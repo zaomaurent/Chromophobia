@@ -81,9 +81,9 @@ while running:
         # Affichage de la position des ennemis sur la minimap
         draw_object(map["sprites"], player_x, player_y, player_rotation)
 
-        # HP_indicator(50)
-
         screen.blit(Crosshair, Crosshair_coord)  # Affichage du viseur
+
+        screen.blit(weapons[weapon]["texture"], weapons[weapon]["coord"])
 
         if change_color:
             color_timer_difference = t.time() - color_timer
