@@ -101,7 +101,9 @@ weapons = {
         "damage": 20,
         "sound": pg.mixer.Sound("Assets/Sons/blaster.ogg"),
         "name": "blaster",
-        "volume": 0.25
+        "volume": 0.25,
+        'texture': pg.image.load("Assets/blaster.png"),
+        "coord": (tailleX/2, tailleY/2)
     },
 
     2: {
@@ -109,7 +111,9 @@ weapons = {
         "damage": 50,
         "sound": pg.mixer.Sound("Assets/Sons/gun.ogg"),
         "name": "gun",
-        "volume": 0.3
+        "volume": 0.3,
+        'texture': pg.transform.scale(pg.image.load("Assets/gun.png"), (475,400)),
+        "coord": (tailleX/2, tailleY/2)
     }
 }
 
