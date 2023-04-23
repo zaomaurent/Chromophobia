@@ -102,8 +102,8 @@ weapons = {
         "sound": pg.mixer.Sound("Assets/Sons/blaster.ogg"),
         "name": "blaster",
         "volume": 0.25,
-        'texture': pg.image.load("Assets/blaster.png"),
-        "coord": (tailleX/2, tailleY/2)
+        'texture': pg.transform.scale(pg.image.load("Assets/blaster.png"), (300,300)),
+        "coord": (tailleX - 300, tailleY - 200)
     },
 
     2: {
@@ -112,8 +112,8 @@ weapons = {
         "sound": pg.mixer.Sound("Assets/Sons/gun.ogg"),
         "name": "gun",
         "volume": 0.3,
-        'texture': pg.transform.scale(pg.image.load("Assets/gun.png"), (475,400)),
-        "coord": (tailleX/2, tailleY/2)
+        'texture': pg.transform.scale(pg.image.load("Assets/gun.png"), (370,300)),
+        "coord": (tailleX-370, tailleY - 300)
     }
 }
 
