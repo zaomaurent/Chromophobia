@@ -84,7 +84,7 @@ def puissance4():
       a=a-1#pour le tableau qui commence avec une colonne numerotee 0
       i,j=0,0
       pions_place=True
-      while i<=5 and pions_place :#place le pions dans la colone choisi a la premiere case vide trouvee
+      while i<=5 and pions_place :#place le pions dans la colone choisi, a la premiere case vide trouvee
         if tab[i][a]=='.' :
           tab[i][a]='j'
           y=i
@@ -92,8 +92,8 @@ def puissance4():
         else:
           i+=1
       pions_place=True
-      longueur=a
-      hauteur=y
+      longueur=a #pour les fonctions de verif des ligne, colonne, diagonales
+      hauteur=y #pour les fonctions de verif des ligne, colonne, diagonales
       couleur='j'
       alignement_de_4_pions=f_verifcolonne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
       alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
@@ -114,8 +114,8 @@ def puissance4():
             pions_place=False
           else:
             j+=1
-        longueur=b
-        hauteur=x
+        longueur=b #pour les fonctions de verif des ligne, colonne, diagonales
+        hauteur=x  #pour les fonctions de verif des ligne, colonne, diagonales
         couleur='r'
         alignement_de_4_pions=f_verifcolonne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
         alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
@@ -124,9 +124,9 @@ def puissance4():
         pprint(list(reversed(tab)), indent=2)
         if alignement_de_4_pions==False :
           print("le joueur rouge a gagne")
-    continuer=input("voulez vous rejouer?(oui/non)
+    continuer=input("voulez vous rejouer?(oui/non))
     if continuer="oui" or "o":
-      rematch=True
+      rematch=True #relance une artie
     else:
-      rematch=False               
+      rematch=False #ne relance pas une partie            
 puissance4()
