@@ -58,6 +58,7 @@ def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_
         gun_sound(weapons[weapon]["sound"], weapons[weapon]["volume"])
 
 
+
         if viewed_sprite:
             attack(damage, sprite_width, sprite_coord, sprite)
 
@@ -78,16 +79,19 @@ def Sprite_angle(player_x, player_y, sprite_x, sprite_y):
     elif player_x < sprite_x and player_y > sprite_y:
         return m.radians(360) - base_angle
 
-    elif player_x < sprite_x and player_y < sprite_y:
+    else:
         return m.radians(180) + base_angle
 
 
-def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, sprites):
+def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, sprites, reloading):
     global TS, player_hp
     speed, damage = weapons[weapon]["speed"], weapons[weapon]["damage"]
     left, middle, right = pg.mouse.get_pressed()
-    if left and t.time() - last_shot >= speed:
+    print(reloading)
+    if left and t.time() - last_shot >= speed and not reloading:
         shot = True
+        weapons[weapon]["mag"] -= 1
+        print(weapons[weapon]["mag"])
     else:
         shot = False
     # Fonction pour afficher les sprites
