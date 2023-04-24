@@ -43,9 +43,13 @@ while running:
 
         get_pressed = pg.key.get_pressed()
         if get_pressed[pg.K_ESCAPE] and t.time() - break_timer > 0.5:
+            son.volume_set(son.music, 0)
             change_color = Pause(change_color)  # affiche le menu pause
             mouse.set_visible(False)
             break_timer = t.time()
+
+
+        son.volume_set(son.music, 0.1)
 
         for event in pg.event.get():
             ExitWindow(event)
@@ -67,19 +71,22 @@ while running:
         # l'affichage des sprites
         dist_list = RayCasting(player_x, player_y, player_rotation, HEIGHT, wall_color)
 
-        son.sound_effects(volume)  # Appel de la fonction des bruitages
-
         # Echanger entre 2 armes avec les touches du clavier
         weapon = change_weapon(weapon, weapons)
 
         # Fonction d'affichage des sprites
-        last_shot, player_hp = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"])
+        last_shot, player_hp = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"], reloading)
 
         # Affichage de la minimap en haut à gauche
         draw_minimap()
 
+        QUANTUM = pg.font.Font('Assets\Quantum.otf', 20)
+
         #Affichage de la barre de vie
-        pg.draw.rect(screen, (0,255,0), (tailleX/2 - 250, tailleY - 50, player_hp, 10))
+        pg.draw.rect(screen, (0,255,0), (tailleX/2 - 250, tailleY - 50, player_hp, 20))
+        hp_text = str(player_hp) + " ! 500"
+        HP_info = QUANTUM.render(hp_text, True, (255, 255, 255))
+        screen.blit(HP_info, (tailleX/2 - 250, tailleY - 80))
 
         # Affichage de la position des ennemis sur la minimap
         draw_object(map["sprites"], player_x, player_y, player_rotation)
@@ -87,6 +94,10 @@ while running:
         screen.blit(Crosshair, Crosshair_coord)  # Affichage du viseur
 
         screen.blit(weapons[weapon]["texture"], weapons[weapon]["coord"])
+
+        reloading, reload_start = reload(weapons, weapon, reload_start)
+
+        mag_print(weapons,weapon)
 
         if change_color:
             color_timer_difference = t.time() - color_timer
