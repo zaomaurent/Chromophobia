@@ -68,14 +68,14 @@ def f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur,tab): #cett
   return alignement_de_4_pions
 
 def puissance4():
-  tab=[['.','.','.','.','.','.','.'],
+  tab=[['.','.','.','.','.','.','.'], # initialisation de la grille de jeu,elle est a l'envers, elle est renversee avant d'etre montree au joueur
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.']]
   rematch=True
-  while rematch=True:#pour pouvoir rejouer 
+  while rematch=True:#pour pouvoir rejouer ou non 
     alignement_de_4_pions=True #quand false cela veut dire que 4 pions on ete alligne 
     while alignement_de_4_pions:
       a=int(input("Dans quelle colonne voulez vous placer un pions. "))#demande ou veut placer son pion au joueur 1 
@@ -103,11 +103,11 @@ def puissance4():
         print("le joueur jaune a gagne")
       pprint(list(reversed(tab)), indent=2)
       if alignement_de_4_pions!=False:
-        b=int(input("Dans quelle colonne voulez vous placer un pions. "))# pour le joueur 2
-        if b>7:
-          b=int(input("Votre nombre doit etre inferieur a 7. "))
+        b=int(input("Dans quelle colonne voulez vous placer un pions. "))# demande ou le joueur 2 veut placer son pion
+        if b>7: #verifie si le nombre est entre 1 et 7 ca sinon il est hors de la grille 
+          b=int(input("Votre nombre doit etre inferieur a 7. ")) 
         b=b-1
-        while j<=5 and pions_place:
+        while j<=5 and pions_place: #place le pions dans la colone choisi, a la premiere case vide trouvee
           if tab[j][b]=='.' :
             tab[j][b]='r'
             x=j
@@ -121,7 +121,7 @@ def puissance4():
         alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
         alignement_de_4_pions=f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
         alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur,tab)    
-        pprint(list(reversed(tab)), indent=2)
+        pprint(list(reversed(tab)), indent=2)#renverse tableau pour que la grille apparaisse dans le bon sens 
         if alignement_de_4_pions==False :
           print("le joueur rouge a gagne")
     continuer=input("voulez vous rejouer?(oui/non))
