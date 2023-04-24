@@ -74,52 +74,58 @@ def puissance4():
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.']]
-  alignement_de_4_pions=True #quand false cela veut dire que 4 pions on ete alligne 
-  while alignement_de_4_pions:
-    a=int(input("Dans quelle colonne voulez vous placer un pions. "))#pour le joueur 1 
-    if a>7:
-      a=int(input("Votre nombre doit etre inferieur a 7. "))
-    a=a-1
-    i,j=0,0
-    pions_place=True
-    while i<=5 and pions_place :
-      if tab[i][a]=='.' :
-        tab[i][a]='j'
-        y=i
-        pions_place=False
-      else:
-        i+=1
-    pions_place=True
-    longueur=a
-    hauteur=y
-    couleur='j'
-    alignement_de_4_pions=f_verifcolonne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
-    alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
-    alignement_de_4_pions=f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
-    alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
-    if alignement_de_4_pions==False :
-      print("le joueur jaune a gagne")
-    pprint(list(reversed(tab)), indent=2)
-    if alignement_de_4_pions!=False:
-      b=int(input("Dans quelle colonne voulez vous placer un pions. "))# pour le joueur 2
-      if b>7:
-        b=int(input("Votre nombre doit etre inferieur a 7. "))
-      b=b-1
-      while j<=5 and pions_place:
-        if tab[j][b]=='.' :
-          tab[j][b]='r'
-          x=j
+  while rematch=True:
+    alignement_de_4_pions=True #quand false cela veut dire que 4 pions on ete alligne 
+    while alignement_de_4_pions:
+      a=int(input("Dans quelle colonne voulez vous placer un pions. "))#pour le joueur 1 
+      if a>7:
+        a=int(input("Votre nombre doit etre inferieur a 7. "))
+      a=a-1
+      i,j=0,0
+      pions_place=True
+      while i<=5 and pions_place :
+        if tab[i][a]=='.' :
+          tab[i][a]='j'
+          y=i
           pions_place=False
         else:
-          j+=1
-      longueur=b
-      hauteur=x
-      couleur='r'
+          i+=1
+      pions_place=True
+      longueur=a
+      hauteur=y
+      couleur='j'
       alignement_de_4_pions=f_verifcolonne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
       alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
       alignement_de_4_pions=f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
-      alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur,tab)    
-      pprint(list(reversed(tab)), indent=2)
+      alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
       if alignement_de_4_pions==False :
-        print("le joueur rouge a gagne")
+        print("le joueur jaune a gagne")
+      pprint(list(reversed(tab)), indent=2)
+      if alignement_de_4_pions!=False:
+        b=int(input("Dans quelle colonne voulez vous placer un pions. "))# pour le joueur 2
+        if b>7:
+          b=int(input("Votre nombre doit etre inferieur a 7. "))
+        b=b-1
+        while j<=5 and pions_place:
+          if tab[j][b]=='.' :
+            tab[j][b]='r'
+            x=j
+            pions_place=False
+          else:
+            j+=1
+        longueur=b
+        hauteur=x
+        couleur='r'
+        alignement_de_4_pions=f_verifcolonne(hauteur,longueur,alignement_de_4_pions,couleur,tab)
+        alignement_de_4_pions=f_verifdiago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
+        alignement_de_4_pions=f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
+        alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur,tab)    
+        pprint(list(reversed(tab)), indent=2)
+        if alignement_de_4_pions==False :
+          print("le joueur rouge a gagne")
+    rematch=input("voulez vous rejouer?(oui/non)
+    if rematch="oui" or "o":
+      rematch=True
+    else:
+      rematch=False               
 puissance4()
