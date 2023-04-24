@@ -104,7 +104,9 @@ weapons = {
         "name": "blaster",
         "volume": 0.25,
         'texture': pg.transform.scale(pg.image.load("Assets/blaster.png"), (300,300)),
-        "coord": (tailleX - 300, tailleY - 200)
+        "coord": (tailleX - 300, tailleY - 200),
+        "mag": 25,
+        "max_mag": 25
     },
 
     2: {
@@ -114,9 +116,13 @@ weapons = {
         "name": "gun",
         "volume": 0.3,
         'texture': pg.transform.scale(pg.image.load("Assets/gun.png"), (370,300)),
-        "coord": (tailleX-370, tailleY - 300)
+        "coord": (tailleX-370, tailleY - 300),
+        "mag": 5,
+        "max_mag": 5
     }
 }
 
 weapon = 1
 last_shot = t.time()
+reload_start = t.time()
+reloading = False
