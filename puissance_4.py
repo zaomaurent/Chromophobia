@@ -74,16 +74,17 @@ def puissance4():
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.']]
-  while rematch=True:
+  rematch=True
+  while rematch=True:#pour pouvoir rejouer 
     alignement_de_4_pions=True #quand false cela veut dire que 4 pions on ete alligne 
     while alignement_de_4_pions:
-      a=int(input("Dans quelle colonne voulez vous placer un pions. "))#pour le joueur 1 
-      if a>7:
+      a=int(input("Dans quelle colonne voulez vous placer un pions. "))#demande ou veut placer son pion au joueur 1 
+      if a>7:#verifie si le nombre est entre 1 et 7 ca sinon il est hors de la grille 
         a=int(input("Votre nombre doit etre inferieur a 7. "))
-      a=a-1
+      a=a-1#pour le tableau qui commence avec une colonne numerotee 0
       i,j=0,0
       pions_place=True
-      while i<=5 and pions_place :
+      while i<=5 and pions_place :#place le pions dans la colone choisi a la premiere case vide trouvee
         if tab[i][a]=='.' :
           tab[i][a]='j'
           y=i
@@ -123,8 +124,8 @@ def puissance4():
         pprint(list(reversed(tab)), indent=2)
         if alignement_de_4_pions==False :
           print("le joueur rouge a gagne")
-    rematch=input("voulez vous rejouer?(oui/non)
-    if rematch="oui" or "o":
+    continuer=input("voulez vous rejouer?(oui/non)
+    if continuer="oui" or "o":
       rematch=True
     else:
       rematch=False               
