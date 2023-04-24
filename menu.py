@@ -192,7 +192,7 @@ def Pause(change_color):
                         anti_spam = t.time()
                         if change_color:
                             change_color = False
-                            print("Changement de couleur désactivé" + str(change_color))
+                            print("Changement de couleur désactivé")
                         else:
                             change_color = True
                             print("Changement de couleur activé")

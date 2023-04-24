@@ -1,4 +1,5 @@
 import pygame as pg
+import time as t
 
 maps = {
     '1': {
@@ -27,7 +28,9 @@ maps = {
                 "position": (120, 120),  # Position du sprite
                 "class": "ennemy",  # Classe du sprite (ennemi, neutre ou PNJ)
                 "HP": 100,  # Points de vie du sprite si c'est un ennemi
-                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png")  # Texture du sprite mort
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),  # Texture du sprite mort
+                "attack": 10,
+                "last_hit": t.time()
             },
 
             "2": {
@@ -38,7 +41,9 @@ maps = {
                 "position": (210, 210),
                 "class": "ennemy",
                 "HP": 100,
-                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png")
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "attack": 10,
+                "last_hit": t.time()
             },
 
             "3": {
@@ -56,7 +61,7 @@ maps = {
                 "width": 64,
                 "ratio": 64 / 96,
                 "position": (0, 0),
-                "class": "PNJ"
+                "class": "neutral"
             },
 
             "5": {
@@ -67,7 +72,9 @@ maps = {
                 "position": (140, 140),
                 "class": "ennemy",
                 "HP": 100,
-                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png")
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "attack": 10,
+                "last_hit": t.time()
             },
         }
     },
@@ -90,7 +97,8 @@ maps = {
                 "position": (50, 50),
                 "class": "ennemy",
                 "HP": 100,
-                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png")
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "attack": 10
             },
 
         }, },
@@ -208,7 +216,20 @@ maps = {
                 "ratio": 64 / 96,
                 "position": (25.5 * 5, 48 * 5),
                 "class": "neutral"
+            },
+            "2": {
+                "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),
+                "height": 51,
+                "width": 37,
+                "ratio": 37 / 51,
+                "position": (25.5 * 5, 45 * 5),
+                "class": "ennemy",
+                "HP": 100,
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "attack": 10
             }
         }
+
+
     }
 }

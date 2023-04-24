@@ -4,79 +4,85 @@ import pygame as pg
 from constantes import *
 from functions import *
 
+import math as m
+import pygame as pg
+
+from constantes import *
+from functions import *
+
 
 def RayCalcul(RayAngle, player_x, player_y):
-    wall = False
+    if not 0 <= m.degrees(RayAngle) < 360:
+        print(m.degrees(RayAngleq))
     rot_d = m.degrees(RayAngle)
     sin, cos = m.sin(RayAngle), m.cos(RayAngle)
 
     x_slope = cos / sin if sin != 0 else False
     y_slope = sin / cos if cos != 0 else False
 
+    # Permet de savoir dans quelle direction le joueur regarde
     if rot_d <= 90 or rot_d == 360:
-        rx, ry, d = -1, -1, True
+        rx, ry = -1, -1
     elif 90 < rot_d <= 180:
-        rx, ry, d = -1, 1, True
+        rx, ry = -1, 1
     elif 180 < rot_d <= 270:
-        rx, ry, d = 1, 1, False
+        rx, ry = 1, 1
     elif rot_d > 270 and rot_d != 360:
-        rx, ry, d = 1, -1, False
+        rx, ry = 1, -1
 
-    x_depth = m.floor(player_x / TS) * TS if rx == -1 else m.ceil(player_x / TS) * TS
-    y_depth = m.floor(player_y / TS) * TS if ry == -1 else m.ceil(player_y / TS) * TS
-
-    if RayAngle == 0 or m.degrees(RayAngle) == 180 or m.degrees(RayAngle) == 360:
-        while not wall:
-            y_coord = (player_x, y_depth)
-            if not Verif(y_coord[0], y_coord[1], map_number):
-                return abs(player_y - y_depth - TS) if (RayAngle == 0 or m.degrees(RayAngle) == 360) else abs(
-                    player_y - y_depth), y_coord, "ver"
-            y_depth = UpDepth(ry, y_depth)
-
-    elif RayAngle == m.radians(90) or RayAngle == m.radians(270):
-        while not wall:
-            x_coord = (x_depth, player_y)
-            if not Verif(x_coord[0], x_coord[1], map_number):
-                return abs(player_x - x_depth - TS) if m.degrees(RayAngle) == 90 else abs(
-                    player_x - x_depth), x_coord, "hor"
-            x_depth = UpDepth(rx, x_depth)
-
-    else:
-        d_y, d_x, check_x, check_y, verif_x, verif_y = 0, 0, 0, 0, False, False
-
-        while not verif_x and check_x < max_check:
-            r_coord = player_x - x_depth
-            x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
-            verif_x = Check(InMap(x_coord[1]), x_coord)
-            if not verif_x:
-                x_depth = UpDepth(rx, x_depth)
-            check_x += 1
-        d_x = Distance(r_coord, r_coord * x_slope)
-
-        while not verif_y and check_y < max_check:
-            r_coord = player_y - y_depth
-            y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
-            verif_y = Check(InMap(y_coord[1]), y_coord)
-            if not verif_y:
-                y_depth = UpDepth(ry, y_depth)
-                check_y += 1
-        d_y = Distance(r_coord, r_coord * y_slope)
-
-        # x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
-        # y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
-        if verif_x and not verif_y:
-            return d_x, x_coord, "ver"
-
-        elif verif_y and not verif_x:
-            return d_y, y_coord, "hor"
-
-        elif verif_x and verif_y:
-            if d_x <= d_y:
-                return d_x, x_coord, "ver"
-            else:
-                return d_y, y_coord, "hor"
+    # Raycasting des murs sur l'axe des X <=> |
+    wall_x = False
+    start_x = m.floor(player_x / TS) * TS if rx == -1 else m.ceil(player_x / TS) * TS
+    ray_point_x = (
+        start_x,
+        player_y + (abs(start_x - player_x) * x_slope)
+    )
+    x_adding = TS * rx
+    y_adding = TS * x_slope * ry  # Valeur que l'on ajoute au Y a chaque itération de la boucle
+    counter = 0
+    while not wall_x and counter <= max_check:
+        if Check(True, ray_point_x):
+            x_distance = Distance(player_x - ray_point_x[0], player_y - ray_point_x[1])
+            wall_x = True
         else:
-            return MAX_DEPTH + 1, False, False
+            ray_point_x = (ray_point_x[0] + x_adding, ray_point_x[1] + y_adding)
+            counter += 1
+
+
+
+    # Raycasting des murs sur l'axe des Y <=> ---
+    wall_y = False
+    start_y = m.floor(player_y / TS) * TS if ry == -1 else m.ceil(player_y / TS) * TS
+    ray_point_y = (
+        player_x + (abs(start_y - player_y) * y_slope),
+        start_y
+    )
+    x_adding = TS * y_slope * rx  # Valeur que l'on ajoute au Y a chaque itération de la boucle
+    y_adding = TS * ry  # Valeur que l'on ajoute au Y a chaque itération de la boucle
+    counter = 0
+
+    while not wall_y and counter <= max_check:
+        if Check(True, ray_point_y):
+            y_distance = Distance(player_x - ray_point_y[0], player_y - ray_point_y[1])
+            wall_y = True
+        else:
+            ray_point_y = (ray_point_y[0] + x_adding, ray_point_y[1] + y_adding)
+            counter += 1
+
+    if wall_x and not wall_y:
+        return x_distance, ray_point_x, "ver"
+
+    elif not wall_x and wall_y:
+        return y_distance, ray_point_y, "hor"
+
+    elif wall_x and wall_y:
+        if x_distance <= y_distance:
+            return x_distance, ray_point_x, "ver"
+        else:
+            return y_distance, ray_point_y, "hor"
+    else:
+        return MAX_DEPTH + 1, False, False
+
 
 def RayCasting(player_x, player_y, player_rotation, HEIGHT, wall_color):
     dist_list = []
@@ -89,7 +95,6 @@ def RayCasting(player_x, player_y, player_rotation, HEIGHT, wall_color):
             Angle += m.radians(360)
 
         # distance : distance au mur le plus proche aligné au rayon
-        # wall_part : le rayon arrive sur une partie du mur, exemple: le milieu ou les bord du mur
         # wall_side : pour savoir si le mur touché est un mur de horizontal ou verticale
         distance, wall_coord, wall_side = RayCalcul(Angle, player_x, player_y)
         dist_list.append(distance)
@@ -113,6 +118,7 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_rot
         rota_deg = m.degrees(RayAngle)  # Allège le programme en calculs
 
         # Calcul de la colonne qu'il faut texturer
+        # wall_part : le rayon arrive sur une partie du mur, exemple: le milieu ou les bord du mur
         wall_part = (wall_coord[0] % TS) / TS if wall_side == "hor" else (wall_coord[1] % TS) / TS
 
         # -1 pour pouvoir utiliser wall_textures[0]

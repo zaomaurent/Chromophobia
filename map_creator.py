@@ -6,7 +6,7 @@ from constantes import *
 
 def map_creator():
     # size = int(input("Quelle est la taille de la map ? : "))
-    size = 40
+    size = 10
     map = []
     for a in range(size):
         map.append([])

@@ -73,21 +73,24 @@ while running:
         weapon = change_weapon(weapon, weapons)
 
         # Fonction d'affichage des sprites
-        last_shot = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"])
+        last_shot, player_hp = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"])
 
         # Affichage de la minimap en haut à gauche
         draw_minimap()
 
+        #Affichage de la barre de vie
+        pg.draw.rect(screen, (0,255,0), (tailleX/2 - 250, tailleY - 50, player_hp, 10))
+
         # Affichage de la position des ennemis sur la minimap
         draw_object(map["sprites"], player_x, player_y, player_rotation)
 
-        # HP_indicator(50)
-
         screen.blit(Crosshair, Crosshair_coord)  # Affichage du viseur
+
+        screen.blit(weapons[weapon]["texture"], weapons[weapon]["coord"])
 
         if change_color:
             color_timer_difference = t.time() - color_timer
-            if color_timer_difference >= 5:
+            if color_timer_difference >= player_hp/80 + 0.8:
                 color_timer += color_timer_difference
                 if wall_color != 3:
                     wall_color += 1
