@@ -6,7 +6,7 @@ from Sons import gun_sound
 coef_angle_tailleX = tailleX / fov_r
 
 
-def Sprite_calcul(sprite, player_x, player_y,  HEIGHT, dist_list,  last_shot, fov_moins, fov_plus, sp_pl_angle, sprite_x, sprite_y, weapon):  # Fonction de calcul et d'affichage des sprites et de leurs coordonnées
+def Sprite_calcul(sprite, player_x, player_y,  HEIGHT, dist_list,  last_shot, fov_moins, fov_plus, sp_pl_angle, sprite_x, sprite_y, weapon, shot):  # Fonction de calcul et d'affichage des sprites et de leurs coordonnées
         global TS
 
         viewed_sprite = False  # Variable booléenne pour savoir si le sprite est visible par le personnage
@@ -45,20 +45,21 @@ def Sprite_calcul(sprite, player_x, player_y,  HEIGHT, dist_list,  last_shot, fo
                     screen.blit(scaled_sprite, sprite_coord)
                     viewed_sprite = True
 
-        left, middle, right = pg.mouse.get_pressed()
+
         speed, damage = weapons[weapon]["speed"], weapons[weapon]["damage"]
 
 
-        if left and t.time() - last_shot >= speed:
 
+        if shot:
             if sprite["class"] == "ennemy":
                 if sprite["HP"] > 0:
                     last_shot = t.time()
 
             gun_sound(weapons[weapon]["sound"], weapons[weapon]["volume"])
             print(viewed_sprite)
+
             if viewed_sprite:
-                attack(sp_pl_angle,damage, sprite_width,sprite_coord)
+                attack(damage, sprite_width, sprite_coord, sprite)
 
         return last_shot
 
@@ -82,13 +83,18 @@ def Sprite_angle(player_x, player_y, sprite_x, sprite_y):
 
 def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, sprites):
     global TS
+    left, middle, right = pg.mouse.get_pressed()
+    if left and t.time() - last_shot >= speed:
+        shot = True
+    else:
+        shot = False
     # Fonction pour afficher les sprites
     for sprite in sprites.values():
         sprite_x, sprite_y = sprite["position"]
         sprite_angle = Sprite_angle(player_x, player_y, sprite_x, sprite_y)
         sp_pl_angle = sprite_angle - player_rotation
         fov_plus, fov_moins = HALF_FOV, - HALF_FOV
-        last_shot = Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins, fov_plus, sp_pl_angle, sprite_x, sprite_y, weapon)
+        last_shot = Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins, fov_plus, sp_pl_angle, sprite_x, sprite_y, weapon, shot)
                 
     return last_shot
 
@@ -105,13 +111,13 @@ def draw_object(sprites, player_x, player_y, player_rotation):
                  (player_x - 25 * m.sin(player_rotation), player_y - 25 * m.cos(player_rotation)))
 
 
-def attack(sprite_angle, damage, sprite_width, sprite_coord):
-    global sprite, TS
+def attack(damage, sprite_width, sprite_coord, sprite):
+    global  TS
 
-    print(sprite_coord)
+
     limit_left, limit_right = sprite_coord[0], sprite_coord[0] + sprite_width
-    print('limits : ',limit_left, limit_right)
+
     if limit_left <= tailleX/2 <= limit_right and sprite["class"] == "ennemy":
         sprite["HP"] -= damage
-        print("hit")
-        print("hp :" , sprite["HP"])
+        print('hit')
+
