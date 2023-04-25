@@ -4,12 +4,6 @@ import pygame as pg
 from constantes import *
 from functions import *
 
-import math as m
-import pygame as pg
-
-from constantes import *
-from functions import *
-
 
 def RayCalcul(RayAngle, player_x, player_y):
     if not 0 <= m.degrees(RayAngle) < 360:
