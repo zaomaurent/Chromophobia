@@ -75,7 +75,7 @@ def puissance4():
      ['.','.','.','.','.','.','.'],
      ['.','.','.','.','.','.','.']]
   rematch=True
-  while rematch=True:#pour pouvoir rejouer ou non 
+  while rematch==True:#pour pouvoir rejouer ou non 
     alignement_de_4_pions=True #quand false cela veut dire que 4 pions on ete alligne 
     while alignement_de_4_pions:
       a=int(input("Dans quelle colonne voulez vous placer un pions. "))#demande ou veut placer son pion au joueur 1 
@@ -124,9 +124,9 @@ def puissance4():
         pprint(list(reversed(tab)), indent=2)#renverse tableau pour que la grille apparaisse dans le bon sens 
         if alignement_de_4_pions==False :
           print("le joueur rouge a gagne")
-    continuer=input("voulez vous rejouer?(oui/non))
-    if continuer="oui" or "o":
-      rematch=True #relance une artie
+    continuer=input("voulez vous rejouer?(oui/non)")
+    if continuer=="oui" or "o":
+      rematch==True #relance une artie
     else:
-      rematch=False #ne relance pas une partie            
+      rematch==False #ne relance pas une partie            
 puissance4()
