@@ -87,11 +87,9 @@ def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, we
     global TS, player_hp
     speed, damage = weapons[weapon]["speed"], weapons[weapon]["damage"]
     left, middle, right = pg.mouse.get_pressed()
-    print(reloading)
     if left and t.time() - last_shot >= speed and not reloading:
         shot = True
         weapons[weapon]["mag"] -= 1
-        print(weapons[weapon]["mag"])
     else:
         shot = False
     # Fonction pour afficher les sprites

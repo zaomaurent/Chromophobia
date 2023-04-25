@@ -39,7 +39,7 @@ def Deplacements(current_speed, speed, HEIGHT, player_x, player_y, player_rotati
     get_pressed = pg.key.get_pressed()
 
     if get_pressed[pg.K_LSHIFT]:  # Si le joueur cours
-        current_speed = speed * 1.5
+        current_speed = speed * 2
 
     # Gestion des collision:
     # Les variable équivalent aux positions suivantes si le joueur fait une action (H G B D)

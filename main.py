@@ -56,6 +56,7 @@ while running:
 
         from constantes import speed
 
+        speed *= 60/clock.get_fps()
         # Permet au joueur de se deplacer et de gerer les collisions
         player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed,
                                                                    HEIGHT, player_x, player_y,
@@ -93,7 +94,8 @@ while running:
 
         screen.blit(Crosshair, Crosshair_coord)  # Affichage du viseur
 
-        screen.blit(weapons[weapon]["texture"], weapons[weapon]["coord"])
+        if not reloading:
+            screen.blit(weapons[weapon]["texture"], weapons[weapon]["coord"])
 
         reloading, reload_start = reload(weapons, weapon, reload_start)
 

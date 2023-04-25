@@ -44,11 +44,11 @@ player = players[1]
 player_x, player_y = player["spawn"]
 player_rotation = player["base rotation"]
 player_hp = 500
-speed = 1 * TS / 25  # vitesse de base du joueur
+speed = 0.5  # vitesse de base du joueur
 current_speed = speed  # deuxieme variable afin de pouvoir courir
 
 # Pour le Raycaster
-LINE_SIZE = 1  # Le raycaster fonctionne par colonne qu'il affiche, LINE_SIZE est la taille en pixel de ces colonnes
+LINE_SIZE = 2 # Le raycaster fonctionne par colonne qu'il affiche, LINE_SIZE est la taille en pixel de ces colonnes
 nb_LINE = tailleX / LINE_SIZE  # Nombre de rayons envoyés == nombre de colonnes affichées sur l'écran
 RAY_SENSI = fov_r / nb_LINE  # Angle entre chaque rayon du raycaster
 MAX_DEPTH = TS * max_check  # En fonction de la distance d'affichages, c'est la taille maximum d'un rayon
@@ -126,3 +126,4 @@ weapon = 1
 last_shot = t.time()
 reload_start = t.time()
 reloading = False
+ennemies_left = len(maps[map_number]["sprites"])

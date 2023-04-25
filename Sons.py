@@ -16,9 +16,6 @@ def f_music(volume):
     music.play(-1)
 
 
-
-
-
 def sound_effects(volume):
 
     key_pressed = pg.key.get_pressed()
@@ -35,7 +32,5 @@ def gun_sound(sound, volume):
     sound.set_volume(volume)
     sound.play()
 
-def gun_reload(weapon, volume):
-    sound = pg.mixer.Sound("Assets/Sons/reload.ogg")
+def volume_set(sound, volume):
     sound.set_volume(volume)
-    sound.play()
