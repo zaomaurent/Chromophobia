@@ -6,7 +6,7 @@ coef_angle_tailleX = tailleX / fov_r
 
 
 def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins, fov_plus, sp_pl_angle, sprite_x,
-                  sprite_y, weapon, shot, damage):  # Fonction de calcul et d'affichage des sprites et de leurs coordonnées
+                  sprite_y, weapon, shot, damage, dead_mobs):  # Fonction de calcul et d'affichage des sprites et de leurs coordonnées
     global TS,player_hp
 
     viewed_sprite = False  # Variable booléenne pour savoir si le sprite est visible par le personnage
@@ -46,8 +46,6 @@ def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_
                 sprite_coord = [column - sprite_width // 2, (tailleY / 2) - (sprite_height // 2) + HEIGHT]
                 screen.blit(scaled_sprite, sprite_coord)
                 viewed_sprite = True
-                #sprite_attack(sprite_distance, sprite)
-
 
 
     if shot:
@@ -60,10 +58,10 @@ def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_
 
 
         if viewed_sprite:
-            attack(damage, sprite_width, sprite_coord, sprite)
+            mob_quantity = attack(damage, sprite_width, sprite_width,  sprite_coord, sprite, dead_mobs)
 
 
-    return last_shot
+    return last_shot, dead_mobs
 
 
 def Sprite_angle(player_x, player_y, sprite_x, sprite_y):
@@ -83,7 +81,7 @@ def Sprite_angle(player_x, player_y, sprite_x, sprite_y):
         return m.radians(180) + base_angle
 
 
-def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, sprites, reloading):
+def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, sprites, reloading, dead_mobs):
     global TS, player_hp
     speed, damage = weapons[weapon]["speed"], weapons[weapon]["damage"]
     left, middle, right = pg.mouse.get_pressed()
@@ -98,16 +96,17 @@ def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, we
         sprite_angle = Sprite_angle(player_x, player_y, sprite_x, sprite_y)
         sp_pl_angle = sprite_angle - player_rotation
         fov_plus, fov_moins = HALF_FOV, - HALF_FOV
-        last_shot = Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins, fov_plus,
-                                  sp_pl_angle, sprite_x, sprite_y, weapon, shot, damage)
+        last_shot, mob_quantity = Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins, fov_plus,
+                                  sp_pl_angle, sprite_x, sprite_y, weapon, shot, damage, dead_mobs)
 
-    return last_shot, player_hp
+    return last_shot, player_hp, dead_mobs
 
 
 def draw_object(sprites, player_x, player_y, player_rotation):
     for sprite in sprites.values():
         if sprite["class"] == "ennemy":
-            pg.draw.circle(screen, (0, 120, 200), sprite["position"], 4)
+            if sprite["HP"] > 0:
+                pg.draw.circle(screen, (220, 50, 0), sprite["position"], 4)
 
     #  Joueur
     pg.draw.circle(screen, (255, 0, 0), (player_x, player_y), 4)
@@ -115,19 +114,23 @@ def draw_object(sprites, player_x, player_y, player_rotation):
                  (player_x - 25 * m.sin(player_rotation), player_y - 25 * m.cos(player_rotation)))
 
 
-def attack(damage, sprite_width, sprite_coord, sprite):
+def attack(damage, sprite_width, sprite_height, sprite_coord, sprite, dead_mobs):
     global TS, player_hp
 
     limit_left, limit_right = sprite_coord[0], sprite_coord[0] + sprite_width
+    limit_up, limit_down = sprite_coord[1], sprite_coord[1] + sprite_height
 
-    if limit_left <= tailleX / 2 <= limit_right and sprite["class"] == "ennemy":
+    if limit_left <= tailleX / 2 <= limit_right and limit_up <= tailleY / 2 <= limit_down and sprite["class"] == "ennemy":
         sprite_hp_before = sprite["HP"]
         sprite["HP"] -= damage
+        print("hp")
         if sprite_hp_before > 0 and sprite["HP"] <= 0:
             player_hp += 50
+            dead_mobs += 1
             if player_hp > 500:
                 player_hp = 500
 
+    return dead_mobs
 
 def sprite_attack(sprite_distance, sprite):
     global player_hp
