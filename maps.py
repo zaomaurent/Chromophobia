@@ -18,6 +18,7 @@ maps = {
         "map size": 10,  # Taille de la map
         "tile size": 250 / 10,  # Echelle de la map
         "spawn point": (37.5, 37.5),  # Point d'apparition du joueur
+        "mob_quantity": 3,  # Nombre d'ennemis sur la map
         "sprites": {  # Dictionnaire des différents sprites et de leur position
 
             "1": {
@@ -158,6 +159,7 @@ maps = {
         "map size": 50,
         "tile size": 250 / 50,
         "spawn point": (25.5 * 5, 47.5 * 5),
+        "mob_quantity": 8,
         "sprites": {
             "1": {
                 "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),
