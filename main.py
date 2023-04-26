@@ -76,7 +76,7 @@ while running:
         weapon = change_weapon(weapon, weapons)
 
         # Fonction d'affichage des sprites
-        last_shot, player_hp, mob_quantity = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"], reloading, dead_mobs)
+        last_shot, player_hp, dead_mobs = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"], reloading, dead_mobs)
 
         # Affichage de la minimap en haut à gauche
         draw_minimap()
