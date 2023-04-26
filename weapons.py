@@ -13,17 +13,18 @@ def change_weapon(weapon, weapons):
     return weapon
 
 
-reload_sound = pg.mixer.Sound("Assets/Sons/gun.ogg")
+reload_sound = pg.mixer.Sound("Assets/Sons/reload.mp3")
 reload_sound.set_volume(0.4)
 
 
-def reload(weapons, weapon, reload_start):
+def reload(weapons, weapon, reload_start, reloading):
     get_pressed = pg.key.get_pressed()
 
-    if weapons[weapon]["mag"] <= 0 or get_pressed[pg.K_r]:
+    if (weapons[weapon]["mag"] <= 0 or get_pressed[pg.K_r]) and not reloading:
         reload_start = t.time()
         reloading = True
-        reload_sound.play()
+        reload_sound.play(0)
+        print("reload")
         weapons[weapon]["mag"] = weapons[weapon]["max_mag"]
 
     if t.time() - reload_start >= 2:
