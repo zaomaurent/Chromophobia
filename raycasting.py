@@ -14,75 +14,52 @@ def RayCalcul(RayAngle, player_x, player_y):
     y_slope = sin / cos if cos != 0 else False
 
     if rot_d <= 90 or rot_d == 360:
-        rx, ry = -1, -1
+        rx, ry, d = -1, -1, True
     elif 90 < rot_d <= 180:
-        rx, ry = -1, 1
+        rx, ry, d = -1, 1, True
     elif 180 < rot_d <= 270:
-        rx, ry = 1, 1
+        rx, ry, d = 1, 1, False
     elif rot_d > 270 and rot_d != 360:
-        rx, ry = 1, -1
+        rx, ry, d = 1, -1, False
 
-    ############################################################
-    x_start = (m.floor(player_x / TS) * TS) + (TS if rx == -1 else 0)
+    x_depth = m.floor(player_x / TS) * TS if rx == -1 else m.ceil(player_x / TS) * TS
+    y_depth = m.floor(player_y / TS) * TS if ry == -1 else m.ceil(player_y / TS) * TS
 
-    x_hit_point = (
-        x_start,
-        player_y + (x_start - player_x) * x_slope
-    )
+    d_y, d_x, check_x, check_y, verif_x, verif_y = 0, 0, 0, 0, False, False
 
-    x_hit = False
-    x_distance = 0
-    counter = 0
+    while not verif_x and check_x < max_check:
+        r_coord = player_x - x_depth
+        x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
+        verif_x = Check(InMap(x_coord[1]), x_coord)
+        if not verif_x:
+            x_depth = UpDepth(rx, x_depth)
+        check_x += 1
+    d_x = Distance(r_coord, r_coord * x_slope)
 
-    x_adding = TS * rx
-    y_adding = TS * x_slope * ry
+    while not verif_y and check_y < max_check:
+        r_coord = player_y - y_depth
+        y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
+        verif_y = Check(InMap(y_coord[1]), y_coord)
+        if not verif_y:
+            y_depth = UpDepth(ry, y_depth)
+            check_y += 1
+    d_y = Distance(r_coord, r_coord * y_slope)
 
-    while not x_hit and counter <= max_check:
-        x_hit = Check(True, x_hit_point)
-        if x_hit:
-            x_distance = Distance(x_hit_point[0] - player_x, x_hit_point[1] - player_y)
+    # x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
+    # y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
+    if verif_x and not verif_y:
+        return d_x, x_coord, "ver"
+
+    elif verif_y and not verif_x:
+        return d_y, y_coord, "hor"
+
+    elif verif_x and verif_y:
+        if d_x <= d_y:
+            return d_x, x_coord, "ver"
         else:
-            x_hit_point = (x_hit_point[0] + x_adding, x_hit_point[1] + y_adding)
-            counter += 1
-
-    ############################################################
-    y_start = (m.floor(player_y / TS) * TS) + (TS if ry == -1 else 0)
-
-    y_hit_point = (
-        player_x + (y_start - player_y) * y_slope,
-        y_start
-    )
-
-    y_hit = False
-    y_distance = 0
-    counter = 0
-
-    x_adding = TS * y_slope * rx
-    y_adding = TS * ry
-
-    while not y_hit and counter <= max_check:
-        y_hit = Check(True, y_hit_point)
-        if y_hit:
-            y_distance = Distance(y_hit_point[0] - player_x, y_hit_point[1] - player_y)
-        else:
-            y_hit_point = (y_hit_point[0] + x_adding, y_hit_point[1] + y_adding)
-            counter += 1
-
-    # //////////////////////////////////////////////////////
-    if x_hit and not y_hit:
-        return x_distance, x_hit_point, "ver"
-
-    elif not x_hit and y_hit:
-        return y_distance, y_hit_point, "hor"
-
-    elif x_hit and y_hit:
-        if x_distance <= y_distance:
-            return x_distance, x_hit_point, "ver"
-        else:
-            return y_distance, y_hit_point, "hor"
+            return d_y, y_coord, "hor"
     else:
-        return MAX_DEPTH + 1, None, None
-
+        return MAX_DEPTH + 1, False, False
 
 def RayCasting(player_x, player_y, player_rotation, HEIGHT, wall_color):
     dist_list = []
@@ -130,7 +107,6 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_rot
                 texture_number = active_map[int(wall_coord[1] / TS - 0.01)][int(wall_coord[0] / TS)] - 1
 
         elif wall_side == "ver":
-            print(wall_coord)
             if 180 <= rota_deg <= 360 or rota_deg == 0:
                 texture_number = active_map[int(wall_coord[1] / TS)][int(wall_coord[0] / TS + 0.01)] - 1
             else:

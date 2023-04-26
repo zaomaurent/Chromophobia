@@ -24,8 +24,7 @@ def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_
             sprite_distance = Distance(sprite_x - player_x, sprite_y - player_y) * m.cos(
                 sp_pl_angle)  # Appel de la fonction calculant la distance du sprite
 
-            if 15 < sprite_distance <= dist_list[
-                int(column // LINE_SIZE)]:  # Si le sprite est devant un mur et à plus de 15 de distance (évite les bugs lorsque l'on traverse un sprite)
+            if 15 < sprite_distance <= dist_list[int(column // LINE_SIZE)]:  # Si le sprite est devant un mur et à plus de 15 de distance (évite les bugs lorsque l'on traverse un sprite)
                 sprite_height = int(((TS / 1.05) / sprite_distance) * SCREEN_DISTANCE)
                 sprite_width = sprite_height * sprite["ratio"]
                 scaled_sprite = pg.transform.scale(texture, (sprite_width, sprite_height))

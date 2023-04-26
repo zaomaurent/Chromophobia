@@ -12,10 +12,8 @@ def change_weapon(weapon, weapons):
                 weapon = 1
     return weapon
 
-
-reload_sound = pg.mixer.Sound("Assets/Sons/reload.mp3")
+reload_sound = pg.mixer.Sound("Assets/Sons/reload_sound.ogg")
 reload_sound.set_volume(0.4)
-
 
 def reload(weapons, weapon, reload_start, reloading):
     get_pressed = pg.key.get_pressed()

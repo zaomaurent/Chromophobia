@@ -122,6 +122,7 @@ weapons = {
     }
 }
 
+
 weapon = 1
 last_shot = t.time()
 reload_start = t.time()
