@@ -57,9 +57,9 @@ def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_
 
 
         if viewed_sprite:
-            mob_quantity = attack(damage, sprite_width, sprite_width,  sprite_coord, sprite, dead_mobs)
+            dead_mobs = attack(damage, sprite_width, sprite_width,  sprite_coord, sprite, dead_mobs)
 
-
+    print(dead_mobs)
     return last_shot, dead_mobs
 
 
@@ -95,7 +95,7 @@ def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, we
         sprite_angle = Sprite_angle(player_x, player_y, sprite_x, sprite_y)
         sp_pl_angle = sprite_angle - player_rotation
         fov_plus, fov_moins = HALF_FOV, - HALF_FOV
-        last_shot, mob_quantity = Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins, fov_plus,
+        last_shot, dead_mobs = Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins, fov_plus,
                                   sp_pl_angle, sprite_x, sprite_y, weapon, shot, damage, dead_mobs)
 
     return last_shot, player_hp, dead_mobs
@@ -122,10 +122,10 @@ def attack(damage, sprite_width, sprite_height, sprite_coord, sprite, dead_mobs)
     if limit_left <= tailleX / 2 <= limit_right and limit_up <= tailleY / 2 <= limit_down and sprite["class"] == "ennemy":
         sprite_hp_before = sprite["HP"]
         sprite["HP"] -= damage
-        print("hp")
         if sprite_hp_before > 0 and sprite["HP"] <= 0:
             player_hp += 50
             dead_mobs += 1
+
             if player_hp > 500:
                 player_hp = 500
 
