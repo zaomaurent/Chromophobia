@@ -31,6 +31,3 @@ def sound_effects(volume):
 def gun_sound(sound, volume):
     sound.set_volume(volume)
     sound.play()
-
-def volume_set(sound, volume):
-    sound.set_volume(volume)
