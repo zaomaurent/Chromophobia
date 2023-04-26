@@ -13,23 +13,23 @@ from weapons import *
 
 # from ATH import *
 
+
 def draw_minimap():  # fonction qui affiche la carte où se déplace le joueur; En haut à gauche de la fenetre
     for y, line in enumerate(map["map"]):
         for x, column in enumerate(line):
             pg.draw.rect(
                 screen,
                 (200, 200, 200) if map["map"][y][x] == 0 else (100, 100, 100),
-                (x * TS, y * TS, TS, TS)
-            )
+                (x * TS, y * TS, TS, TS))
     for sprite in map["sprites"].values():
-        pg.draw.circle(screen, (0, 255, 120), sprite["position"], 3)
-
+        if sprite["class"] != "ennemy":
+            pg.draw.circle(screen, (0, 255, 120), sprite["position"], 3)
 
 volume = son.init()
 
 # On envoie le joueur ds le menu
 Menu()  # fonctions principales séparée du game loop
-son.f_music(volume)
+#son.f_music(volume)
 
 # Game Loop
 color_timer = t.time()
@@ -43,13 +43,13 @@ while running:
 
         get_pressed = pg.key.get_pressed()
         if get_pressed[pg.K_ESCAPE] and t.time() - break_timer > 0.5:
-            son.volume_set(son.music, 0)
+            son.music.set_volume(0)
             change_color = Pause(change_color)  # affiche le menu pause
             mouse.set_visible(False)
             break_timer = t.time()
 
 
-        son.volume_set(son.music, 0.1)
+        son.music.set_volume(0.1)
 
         for event in pg.event.get():
             ExitWindow(event)
@@ -76,7 +76,7 @@ while running:
         weapon = change_weapon(weapon, weapons)
 
         # Fonction d'affichage des sprites
-        last_shot, player_hp = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"], reloading)
+        last_shot, player_hp, mob_quantity = Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, weapon, map["sprites"], reloading, dead_mobs)
 
         # Affichage de la minimap en haut à gauche
         draw_minimap()
@@ -89,6 +89,15 @@ while running:
         HP_info = QUANTUM.render(hp_text, True, (255, 255, 255))
         screen.blit(HP_info, (tailleX/2 - 250, tailleY - 80))
 
+        QUANTUM = pg.font.Font('Assets\Quantum.otf', 50)
+
+        mob_text = str(dead_mobs) + "x "
+        mob_info = QUANTUM.render(mob_text, True, (255, 255, 255))
+        screen.blit(mob_info, (tailleX - 140, 20))
+        mob = pg.image.load("Assets/Sprites/Ennemis/test.png")
+        screen.blit(mob, (tailleX - 60, 20))
+
+
         # Affichage de la position des ennemis sur la minimap
         draw_object(map["sprites"], player_x, player_y, player_rotation)
 
@@ -97,7 +106,7 @@ while running:
         if not reloading:
             screen.blit(weapons[weapon]["texture"], weapons[weapon]["coord"])
 
-        reloading, reload_start = reload(weapons, weapon, reload_start)
+        reloading, reload_start = reload(weapons, weapon, reload_start, reloading)
 
         mag_print(weapons,weapon)
 
