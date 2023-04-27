@@ -39,7 +39,8 @@ while running:
 
     if mouse.get_focused():
         mouse.set_visible(False)
-        pg.display.set_caption(f"Raycasting - {int(clock.get_fps())}") # Change le titre de la fenetre avec les fps
+        fps = clock.get_fps()
+        pg.display.set_caption(f"Raycasting - {int(fps)}") # Change le titre de la fenetre avec les fps
 
         get_pressed = pg.key.get_pressed()
         if get_pressed[pg.K_ESCAPE] and t.time() - break_timer > 0.5:
@@ -48,7 +49,6 @@ while running:
             mouse.set_visible(False)
             break_timer = t.time()
 
-
         son.music.set_volume(0.1)
 
         for event in pg.event.get():
@@ -56,9 +56,11 @@ while running:
 
         from constantes import speed
 
-        speed *= 60/clock.get_fps()
+        speed_ratio = 60/fps
+        speed = speed_ratio
+        speed_multiplier = 2/speed_ratio
         # Permet au joueur de se deplacer et de gerer les collisions
-        player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed,
+        player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, speed_multiplier,
                                                                    HEIGHT, player_x, player_y,
                                                                    player_rotation)
         # calcul du milieu effectif de l'ecran, avc l'angle de vue (haut/bas) du joueur
@@ -116,7 +118,7 @@ while running:
 
         reloading, reload_start = reload(weapons, weapon, reload_start, reloading)
 
-        mag_print(weapons,weapon)
+        mag_print(weapons, weapon)
 
         if change_color:
             color_timer_difference = t.time() - color_timer

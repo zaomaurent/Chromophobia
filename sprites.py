@@ -59,6 +59,7 @@ def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_
         if viewed_sprite:
             dead_mobs = attack(damage, sprite_width, sprite_width,  sprite_coord, sprite, dead_mobs)
 
+    print(dead_mobs)
     return last_shot, dead_mobs
 
 
@@ -83,7 +84,7 @@ def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, we
     global TS, player_hp
     speed, damage = weapons[weapon]["speed"], weapons[weapon]["damage"]
     left, middle, right = pg.mouse.get_pressed()
-    if left and t.time() - last_shot >= speed and not reloading and weapons[weapon]["mag"] > 0:
+    if left and t.time() - last_shot >= speed and not reloading:
         shot = True
         weapons[weapon]["mag"] -= 1
     else:

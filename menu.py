@@ -67,7 +67,8 @@ def Menu():
                     elif index == 2 and anti_spam:
                         sys.exit()
                     elif index == 3:
-                        webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+                        webbrowser.open_new_tab("https://youtu.be/zOk3u_GP0vw")
+                        # webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
         screen.blit(background, (0, 0))
         screen.blit(menu, (0, 0))
         pg.display.flip()

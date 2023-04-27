@@ -13,7 +13,7 @@ def change_weapon(weapon, weapons):
     return weapon
 
 
-reload_sound = pg.mixer.Sound("Assets/Sons/reload.mp3")
+reload_sound = pg.mixer.Sound("Assets/Sons/reload_sound.ogg")
 reload_sound.set_volume(0.4)
 
 

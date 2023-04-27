@@ -33,13 +33,13 @@ def Collision(): # verification des coordonés du joueur (si il est en train d'a
     return True if touche else False
 
 
-def Deplacements(current_speed, speed, HEIGHT, player_x, player_y, player_rotation):
+def Deplacements(current_speed, speed, speed_multiplier, HEIGHT, player_x, player_y, player_rotation):
     # player_hitbox = (player_x - 10, player_y - 10, player_x + 10, player_y + 10)
     cos, sin = m.cos(player_rotation), m.sin(player_rotation)
     get_pressed = pg.key.get_pressed()
 
     if get_pressed[pg.K_LSHIFT]:  # Si le joueur cours
-        current_speed = speed * 1.75
+        current_speed = speed * speed_multiplier
 
     # Gestion des collision:
     # Les variable équivalent aux positions suivantes si le joueur fait une action (H G B D)
