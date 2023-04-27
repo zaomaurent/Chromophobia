@@ -154,8 +154,4 @@ def RayDrawing(distance, line_index, RayAngle, wall_coord, wall_side, player_rot
                      slice_y + HEIGHT))  # Affichage prennant en compte le mouv de la souris# création du fog
 
         # Assombrissement des murs en fonction de la distance
-        '''color = ((distance / MAX_DEPTH) * 255)
-        filtre = pg.Surface(column.get_size())
-        filtre.fill((0, 0, 0))
-        filtre.set_alpha(color)
-        screen.blit(filtre, (line_index * LINE_SIZE, slice_y + HEIGHT))'''
+        
