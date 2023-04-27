@@ -12,7 +12,7 @@ def init():
 
 def f_music(volume):
     global music
-    music.set_volume(0)  # volume
+    music.set_volume(0.1)  # volume
     music.play(-1)
 
 
