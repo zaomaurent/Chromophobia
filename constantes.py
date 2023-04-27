@@ -22,7 +22,7 @@ pg.display.set_caption("Raycasting")
 fov_d = 110  # Champ de vision en radians
 fov_r = m.radians(fov_d)  # Champ de vision en radians
 HALF_FOV = fov_r / 2
-mouse_speed = 1  # Sensibilité de la souris lors du mouvement
+mouse_speed = 2  # Sensibilité de la souris lors du mouvement
 mouse_coef = m.radians(90) * (mouse_speed / tailleX)  # --> Coeficient utilisé lors de du mouvement de la souris
 crosshair_path = "Assets/crosshair.png"  # Permet au joueur de choisir son viseur
 crosshair = pg.image.load(crosshair_path)
@@ -121,7 +121,6 @@ weapons = {
         "max_mag": 5
     }
 }
-
 
 weapon = 1
 last_shot = t.time()
