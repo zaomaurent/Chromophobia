@@ -10,7 +10,7 @@ Utilisation:
 - Commandes : - Z/Q/S/D pour se déplacer
               - Shift pour sprinter
               - Clic gauche pour tirer
-              - R pour recharger l'arme (automatique si chargeur vide)
+              - R pour recharger l'arme
               - Molette de la souris pour changer d'arme
               - Echap en jeu pour quitter / retourner dans les menus
               
