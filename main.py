@@ -106,6 +106,14 @@ while running:
         if not reloading:
             screen.blit(weapons[weapon]["texture"], weapons[weapon]["coord"])
 
+        if player_hp <= 0:
+            player_hp, dead_mobs, player_x, player_y, player_rotation = map["spawn point"] = Game_over(map["sprites"])
+            Menu()
+
+        if dead_mobs == map["mob_quantity"]:
+            player_hp, dead_mobs, player_x, player_y, player_rotation = map["spawn point"] = Victory(map["sprites"])
+            Menu()
+
         reloading, reload_start = reload(weapons, weapon, reload_start, reloading)
 
         mag_print(weapons,weapon)
