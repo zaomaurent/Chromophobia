@@ -122,11 +122,11 @@ def puissance4():
         alignement_de_4_pions=f_verifautrediago(hauteur,longueur,alignement_de_4_pions,couleur,tab)
         alignement_de_4_pions=f_verifligne(hauteur,longueur,alignement_de_4_pions,couleur,tab)    
         pprint(list(reversed(tab)), indent=2)#renverse tableau pour que la grille apparaisse dans le bon sens 
-        if alignement_de_4_pions==False :
+        if not alignement_de_4_pions:
           print("le joueur rouge a gagne")
-    continuer=input("voulez vous rejouer?(oui/non)")
-    if continuer=="oui" or "o":
-      rematch==True #relance une artie
+    continuer = input("voulez vous rejouer?(oui/non)")
+    if continuer == "oui" or continuer == "o":
+      rematch = True #relance une partie
     else:
-      rematch==False #ne relance pas une partie            
-puissance4()
+      rematch = False #ne relance pas une partie
+
