@@ -38,9 +38,9 @@ def Menu():
     debut = time.time()
     Menu_Button = [
         (420, 221, 1179, 374),
-        (450, 221, 1146, 552),
+        (450, 421, 1146, 512),
         (562, 555, 1038, 652),
-        (0, 745, 372, 800)
+        (0, 745, 374, 800)
     ]
 
     menu = pg.image.load("Assets/GUI/menu.png")
@@ -54,19 +54,23 @@ def Menu():
         if get_clicked[0]:
             mx, my = mouse.get_pos()
             for index, button in enumerate(Menu_Button):
-                anti_spam = time.time() - debut > 0.75
+                anti_spam = time.time()
+                print(mx, my, button, IsClicked(button, mx, my))
                 if IsClicked(button, mx, my):
-                    if index == 0 and anti_spam:
-                        if not Modes_De_Jeu(background):  # est ce que le joueur est allé en partie ou est revenu au menu
+                    if index == 0 and anti_spam - debut > 0.75:
+                        if not Modes_De_Jeu(
+                                background):  # est ce que le joueur est allé en partie ou est revenu au menu
                             FonduIn()
+                            anti_spam = t.time()
                             mouse.set_visible(False)
                             return  # On va ds la boucle principale du jeu => la partie 3d
 
-                    elif index == 1 and anti_spam:
+                    elif index == 1 and anti_spam - debut > 0.75:
+                        print("aaaaaaaa")
                         Parametres(background)
-                    elif index == 2 and anti_spam:
+                    elif index == 2 and anti_spam - debut > 0.75:
                         sys.exit()
-                    elif index == 3:
+                    elif index == 3 and anti_spam - debut > 0.75:
                         webbrowser.open_new_tab("https://youtu.be/zOk3u_GP0vw")
                         # webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
         screen.blit(background, (0, 0))
@@ -89,7 +93,7 @@ def Modes_De_Jeu(background):
         for e in pg.event.get():
             if not ExitWindow(e):  # Si l'utilisateur ferme la fenetre
                 sys.exit()
-            if e.type == pg.MOUSEBUTTONDOWN:
+            elif e.type == pg.MOUSEBUTTONDOWN:
                 clicked = True
             else:
                 clicked = False
@@ -97,14 +101,13 @@ def Modes_De_Jeu(background):
             mx, my = mouse.get_pos()
             for index, button in enumerate(buttons):
                 anti_spam = time.time() - debut > 0.75
-                if anti_spam:
-                    if IsClicked(button, mx, my):
-                        if index == 0:
-                            return False
-                        if index == 1:
-                            map_creator()
-                        if index == 2:
-                            return True
+                if anti_spam and IsClicked(button, mx, my):
+                    if index == 0:
+                        return False
+                    elif index == 1:
+                        map_creator()
+                    elif index == 2:
+                        return True
         screen.fill((0, 0, 0))
         screen.blit(background, (0, 0))
         screen.blit(GUI, (0, 0))
@@ -207,6 +210,18 @@ def Pause(change_color):
         clock.tick(60)
     return change_color
 
+
+def Player_reset(sprites):
+    player_hp = 500
+    for sprite in sprites.values():
+        if sprite["class"] == "ennemy":
+            sprite["HP"] = 100
+    dead_mobs = 0
+    player_x, player_y = map["spawn point"]
+    player_rotation = player["base rotation"]
+    return player_hp, dead_mobs, player_x, player_y, player_rotation
+
+
 def Game_over(sprites):
     mouse.set_visible(True)
     Button_Coord = (413, 418, 1187, 542)
@@ -217,23 +232,15 @@ def Game_over(sprites):
         screen.blit(game_over, (0, 0))
         get_clicked = False
         for event in pg.event.get():
+            ExitWindow(event)
             if event.type == pg.MOUSEBUTTONDOWN:
-                get_clicked = True
                 ex, ey = mouse.get_pos()
-        if get_clicked:
-            if Button_Coord[0] <= ex <= Button_Coord[2] and Button_Coord[1] <= ey <= Button_Coord[3]:
-                inpause = False
-                player_hp = 500
-                for sprite in sprites.values():
-                    if sprite["class"] == "ennemy":
-                        sprite["HP"] = 100
-                dead_mobs = 0
-                player_x, player_y = map["spawn point"]
-                player_rotation = player["base rotation"]
-                FonduIn()
-                return player_hp, dead_mobs, player_x, player_y, player_rotation
+                if IsClicked(Button_Coord, ex, ey):
+                    FonduIn()
+                    return Player_reset(sprites)
         pg.display.flip()
         clock.tick(60)
+
 
 def Victory(sprites):
     mouse.set_visible(True)
@@ -245,22 +252,12 @@ def Victory(sprites):
     dark_bg(220)
     while inpause:
         screen.blit(victory_frame, (0, 0))
-        get_clicked = False
         for event in pg.event.get():
+            ExitWindow(event)
             if event.type == pg.MOUSEBUTTONDOWN:
-                get_clicked = True
                 ex, ey = mouse.get_pos()
-        if get_clicked:
-            if Button_Coord[0] <= ex <= Button_Coord[2] and Button_Coord[1] <= ey <= Button_Coord[3]:
-                inpause = False
-                player_hp = 500
-                for sprite in sprites.values():
-                    if sprite["class"] == "ennemy":
-                        sprite["HP"] = 100
-                dead_mobs = 0
-                player_x, player_y = map["spawn point"]
-                player_rotation = player["base rotation"]
-                FonduIn()
-                return player_hp, dead_mobs, player_x, player_y, player_rotation
+                if Button_Coord[0] <= ex <= Button_Coord[2] and Button_Coord[1] <= ey <= Button_Coord[3]:
+                    FonduIn()
+                    return Player_reset(sprites)
         pg.display.flip()
         clock.tick(60)

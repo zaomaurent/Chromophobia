@@ -6,8 +6,9 @@ coef_angle_tailleX = tailleX / fov_r
 
 
 def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins, fov_plus, sp_pl_angle, sprite_x,
-                  sprite_y, weapon, shot, damage, dead_mobs):  # Fonction de calcul et d'affichage des sprites et de leurs coordonnées
-    global TS,player_hp
+                  sprite_y, weapon, shot, damage,
+                  dead_mobs):  # Fonction de calcul et d'affichage des sprites et de leurs coordonnées
+    global TS, player_hp
 
     viewed_sprite = False  # Variable booléenne pour savoir si le sprite est visible par le personnage
     sprite_coord = [2000, 2000]  # Coordonnées si le sprite n'est pas visible pour qu'il soit affiché hors de l'écran
@@ -24,7 +25,8 @@ def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_
             sprite_distance = Distance(sprite_x - player_x, sprite_y - player_y) * m.cos(
                 sp_pl_angle)  # Appel de la fonction calculant la distance du sprite
 
-            if 15 < sprite_distance <= dist_list[int(column // LINE_SIZE)]:  # Si le sprite est devant un mur et à plus de 15 de distance (évite les bugs lorsque l'on traverse un sprite)
+            if 15 < sprite_distance <= dist_list[
+                int(column // LINE_SIZE)]:  # Si le sprite est devant un mur et à plus de 15 de distance (évite les bugs lorsque l'on traverse un sprite)
                 sprite_height = int(((TS / 1.05) / sprite_distance) * SCREEN_DISTANCE)
                 sprite_width = sprite_height * sprite["ratio"]
                 scaled_sprite = pg.transform.scale(texture, (sprite_width, sprite_height))
@@ -46,7 +48,6 @@ def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_
                 screen.blit(scaled_sprite, sprite_coord)
                 viewed_sprite = True
 
-
     if shot:
         if sprite["class"] == "ennemy":
             if sprite["HP"] > 0:
@@ -54,18 +55,14 @@ def Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_
 
         gun_sound(weapons[weapon]["sound"], weapons[weapon]["volume"])
 
-
-
         if viewed_sprite:
-            dead_mobs = attack(damage, sprite_width, sprite_width,  sprite_coord, sprite, dead_mobs)
+            dead_mobs = attack(damage, sprite_width, sprite_width, sprite_coord, sprite, dead_mobs)
 
-    print(dead_mobs)
     return last_shot, dead_mobs
 
 
 def Sprite_angle(player_x, player_y, sprite_x, sprite_y):
     base_angle = m.atan(abs(sprite_x - player_x) / abs(sprite_y - player_y))
-
 
     if player_x > sprite_x and player_y > sprite_y:
         return base_angle
@@ -84,7 +81,7 @@ def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, we
     global TS, player_hp
     speed, damage = weapons[weapon]["speed"], weapons[weapon]["damage"]
     left, middle, right = pg.mouse.get_pressed()
-    if left and t.time() - last_shot >= speed and not reloading:
+    if left and t.time() - last_shot >= speed and not reloading and weapons[weapon]["mag"] > 0:
         shot = True
         weapons[weapon]["mag"] -= 1
     else:
@@ -95,8 +92,9 @@ def Sprite(player_x, player_y, player_rotation, HEIGHT, dist_list, last_shot, we
         sprite_angle = Sprite_angle(player_x, player_y, sprite_x, sprite_y)
         sp_pl_angle = sprite_angle - player_rotation
         fov_plus, fov_moins = HALF_FOV, - HALF_FOV
-        last_shot, dead_mobs = Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins, fov_plus,
-                                  sp_pl_angle, sprite_x, sprite_y, weapon, shot, damage, dead_mobs)
+        last_shot, dead_mobs = Sprite_calcul(sprite, player_x, player_y, HEIGHT, dist_list, last_shot, fov_moins,
+                                             fov_plus,
+                                             sp_pl_angle, sprite_x, sprite_y, weapon, shot, damage, dead_mobs)
 
     return last_shot, player_hp, dead_mobs
 
@@ -122,7 +120,7 @@ def attack(damage, sprite_width, sprite_height, sprite_coord, sprite, dead_mobs)
     if limit_left <= tailleX / 2 <= limit_right and limit_up <= tailleY / 2 <= limit_down and sprite["class"] == "ennemy":
         sprite_hp_before = sprite["HP"]
         sprite["HP"] -= damage
-        if sprite_hp_before > 0 and sprite["HP"] <= 0:
+        if sprite_hp_before > 0 >= sprite["HP"]:
             player_hp += 50
             dead_mobs += 1
 
@@ -130,6 +128,7 @@ def attack(damage, sprite_width, sprite_height, sprite_coord, sprite, dead_mobs)
                 player_hp = 500
 
     return dead_mobs
+
 
 def sprite_attack(sprite_distance, sprite):
     global player_hp
