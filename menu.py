@@ -224,7 +224,7 @@ def Player_reset(sprites):
 
 def Game_over(sprites):
     mouse.set_visible(True)
-    Button_Coord = (413, 418, 1187, 542)
+    Button_Coord = (549, 474, 1049, 598)
     game_over = pg.image.load("Assets/GUI/game_over.png")
     inpause = True
     dark_bg(220)
