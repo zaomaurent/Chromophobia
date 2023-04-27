@@ -9,9 +9,9 @@ from raycasting import *
 from sprites import *
 import Sons as son
 from weapons import *
+from puissance_4 import *
 
 
-# from ATH import *
 
 
 def draw_minimap():  # fonction qui affiche la carte où se déplace le joueur; En haut à gauche de la fenetre
@@ -29,7 +29,7 @@ volume = son.init()
 
 # On envoie le joueur ds le menu
 Menu()  # fonctions principales séparée du game loop
-#son.f_music(volume)
+son.f_music(volume)
 
 # Game Loop
 color_timer = t.time()
@@ -39,8 +39,7 @@ while running:
 
     if mouse.get_focused():
         mouse.set_visible(False)
-        fps = clock.get_fps()
-        pg.display.set_caption(f"Raycasting - {int(fps)}") # Change le titre de la fenetre avec les fps
+        pg.display.set_caption(f"Raycasting - {int(clock.get_fps())}") # Change le titre de la fenetre avec les fps
 
         get_pressed = pg.key.get_pressed()
         if get_pressed[pg.K_ESCAPE] and t.time() - break_timer > 0.5:
@@ -49,6 +48,7 @@ while running:
             mouse.set_visible(False)
             break_timer = t.time()
 
+
         son.music.set_volume(0.1)
 
         for event in pg.event.get():
@@ -56,13 +56,11 @@ while running:
 
         from constantes import speed
 
-        speed_ratio = 60/fps
+        speed_ratio = 60 / clock.get_fps() if clock.get_fps()!=0 else 60
         speed = speed_ratio
-        speed_multiplier = 2/speed_ratio
+        speed_multiplier = 2 / speed_ratio
         # Permet au joueur de se deplacer et de gerer les collisions
-        player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, speed_multiplier,
-                                                                   HEIGHT, player_x, player_y,
-                                                                   player_rotation)
+        player_x, player_y, player_rotation, HEIGHT = Deplacements(current_speed, speed, speed_multiplier, HEIGHT, player_x, player_y, player_rotation)
         # calcul du milieu effectif de l'ecran, avc l'angle de vue (haut/bas) du joueur
         mid = MID_POINT[1] + HEIGHT
 
@@ -118,7 +116,7 @@ while running:
 
         reloading, reload_start = reload(weapons, weapon, reload_start, reloading)
 
-        mag_print(weapons, weapon)
+        mag_print(weapons,weapon)
 
         if change_color:
             color_timer_difference = t.time() - color_timer
