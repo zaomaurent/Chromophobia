@@ -109,10 +109,12 @@ while running:
             screen.blit(weapons[weapon]["texture"], weapons[weapon]["coord"])
 
         if player_hp <= 0:
+            son.music.set_volume(0)
             player_hp, dead_mobs, player_x, player_y, player_rotation = Game_over(map["sprites"])
-            Menu()
+            running = False
 
         if dead_mobs == map["mob_quantity"]:
+            son.music.set_volume(0)
             player_hp, dead_mobs, player_x, player_y, player_rotation = Victory(map["sprites"])
             Menu()
 
