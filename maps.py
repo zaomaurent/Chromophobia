@@ -30,7 +30,6 @@ maps = {
                 "class": "ennemy",  # Classe du sprite (ennemi, neutre ou PNJ)
                 "HP": 100,  # Points de vie du sprite si c'est un ennemi
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),  # Texture du sprite mort
-                "attack": 10,
                 "last_hit": t.time()
             },
 
@@ -43,7 +42,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
 
@@ -74,7 +72,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
         }
@@ -99,7 +96,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10
             },
 
         }, },
@@ -170,7 +166,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
             "2": {
@@ -182,7 +177,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
             "3": {
@@ -194,7 +188,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
             "4": {
@@ -206,7 +199,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
             "5": {
@@ -218,7 +210,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
             "6": {
@@ -230,7 +221,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
             "7": {
@@ -242,7 +232,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
             "8": {
@@ -254,7 +243,6 @@ maps = {
                 "class": "ennemy",
                 "HP": 100,
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
-                "attack": 10,
                 "last_hit": t.time()
             },
         }
