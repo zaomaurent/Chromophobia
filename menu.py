@@ -57,7 +57,7 @@ def Menu():
                 anti_spam = time.time() - debut > 0.75
                 if IsClicked(button, mx, my):
                     if index == 0 and anti_spam:
-                        if not Modes_De_Jeu(background):  # es ce que le joueur est allé en partie ou est revenu au menu
+                        if not Modes_De_Jeu(background):  # est ce que le joueur est allé en partie ou est revenu au menu
                             FonduIn()
                             mouse.set_visible(False)
                             return  # On va ds la boucle principale du jeu => la partie 3d
@@ -205,3 +205,61 @@ def Pause(change_color):
         pg.display.flip()
         clock.tick(60)
     return change_color
+
+def Game_over(sprites):
+    mouse.set_visible(True)
+    Button_Coord = (413, 418, 1187, 542)
+    game_over = pg.image.load("Assets/GUI/game_over.png")
+    inpause = True
+    dark_bg(220)
+    while inpause:
+        screen.blit(game_over, (0, 0))
+        get_clicked = False
+        for event in pg.event.get():
+            if event.type == pg.MOUSEBUTTONDOWN:
+                get_clicked = True
+                ex, ey = mouse.get_pos()
+        if get_clicked:
+            if Button_Coord[0] <= ex <= Button_Coord[2] and Button_Coord[1] <= ey <= Button_Coord[3]:
+                inpause = False
+                player_hp = 500
+                for sprite in sprites.values():
+                    if sprite["class"] == "ennemy":
+                        sprite["HP"] = 100
+                dead_mobs = 0
+                player_x, player_y = map["spawn point"]
+                player_rotation = player["base rotation"]
+                FonduIn()
+                return player_hp, dead_mobs, player_x, player_y, player_rotation
+        pg.display.flip()
+        clock.tick(60)
+
+def Victory(sprites):
+    mouse.set_visible(True)
+    Button_Coord = (413, 469, 1185, 591)
+    victory_frame = pg.image.load("Assets/GUI/victoire.png")
+
+    inpause = True
+
+    dark_bg(220)
+    while inpause:
+        screen.blit(victory_frame, (0, 0))
+        get_clicked = False
+        for event in pg.event.get():
+            if event.type == pg.MOUSEBUTTONDOWN:
+                get_clicked = True
+                ex, ey = mouse.get_pos()
+        if get_clicked:
+            if Button_Coord[0] <= ex <= Button_Coord[2] and Button_Coord[1] <= ey <= Button_Coord[3]:
+                inpause = False
+                player_hp = 500
+                for sprite in sprites.values():
+                    if sprite["class"] == "ennemy":
+                        sprite["HP"] = 100
+                dead_mobs = 0
+                player_x, player_y = map["spawn point"]
+                player_rotation = player["base rotation"]
+                FonduIn()
+                return player_hp, dead_mobs, player_x, player_y, player_rotation
+        pg.display.flip()
+        clock.tick(60)
