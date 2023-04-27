@@ -133,7 +133,7 @@ def attack(damage, sprite_width, sprite_height, sprite_coord, sprite, dead_mobs)
 
 def sprite_attack(sprite_distance, sprite):
     global player_hp
-    if sprite["HP"] > 0 and t.time() - sprite["last_hit"] >= 0.5:
-        player_hp -= sprite["attack"]
+    if sprite["HP"] > 0 and t.time() - sprite["last_hit"] >= 2:
+        player_hp -= 20
         sprite["last_hit"] = t.time()
         return player_hp
