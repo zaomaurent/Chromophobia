@@ -25,41 +25,58 @@ def RayCalcul(RayAngle, player_x, player_y):
     x_depth = m.floor(player_x / TS) * TS if rx == -1 else m.ceil(player_x / TS) * TS
     y_depth = m.floor(player_y / TS) * TS if ry == -1 else m.ceil(player_y / TS) * TS
 
-    d_y, d_x, check_x, check_y, verif_x, verif_y = 0, 0, 0, 0, False, False
-
-    while not verif_x and check_x < max_check:
-        r_coord = player_x - x_depth
-        x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
-        verif_x = Check(InMap(x_coord[1]), x_coord)
-        if not verif_x:
-            x_depth = UpDepth(rx, x_depth)
-        check_x += 1
-    d_x = Distance(r_coord, r_coord * x_slope)
-
-    while not verif_y and check_y < max_check:
-        r_coord = player_y - y_depth
-        y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
-        verif_y = Check(InMap(y_coord[1]), y_coord)
-        if not verif_y:
+    if RayAngle == 0 or m.degrees(RayAngle) == 180 or m.degrees(RayAngle) == 360:
+        while not wall:
+            y_coord = (player_x, y_depth)
+            if not Verif(y_coord[0], y_coord[1], map_number):
+                return abs(player_y - y_depth - TS) if (RayAngle == 0 or m.degrees(RayAngle) == 360) else abs(
+                    player_y - y_depth), y_coord, "ver"
             y_depth = UpDepth(ry, y_depth)
-            check_y += 1
-    d_y = Distance(r_coord, r_coord * y_slope)
 
-    # x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
-    # y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
-    if verif_x and not verif_y:
-        return d_x, x_coord, "ver"
+    elif RayAngle == m.radians(90) or RayAngle == m.radians(270):
+        while not wall:
+            x_coord = (x_depth, player_y)
+            if not Verif(x_coord[0], x_coord[1], map_number):
+                return abs(player_x - x_depth - TS) if m.degrees(RayAngle) == 90 else abs(
+                    player_x - x_depth), x_coord, "hor"
+            x_depth = UpDepth(rx, x_depth)
 
-    elif verif_y and not verif_x:
-        return d_y, y_coord, "hor"
-
-    elif verif_x and verif_y:
-        if d_x <= d_y:
-            return d_x, x_coord, "ver"
-        else:
-            return d_y, y_coord, "hor"
     else:
-        return MAX_DEPTH + 1, False, False
+        d_y, d_x, check_x, check_y, verif_x, verif_y = 0, 0, 0, 0, False, False
+
+        while not verif_x and check_x < max_check:
+            r_coord = player_x - x_depth
+            x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
+            verif_x = Check(InMap(x_coord[1]), x_coord)
+            if not verif_x:
+                x_depth = UpDepth(rx, x_depth)
+            check_x += 1
+        d_x = Distance(r_coord, r_coord * x_slope)
+
+        while not verif_y and check_y < max_check:
+            r_coord = player_y - y_depth
+            y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
+            verif_y = Check(InMap(y_coord[1]), y_coord)
+            if not verif_y:
+                y_depth = UpDepth(ry, y_depth)
+                check_y += 1
+        d_y = Distance(r_coord, r_coord * y_slope)
+
+        # x_coord = (x_depth, player_y + (x_depth - player_x) * x_slope)
+        # y_coord = (player_x + (y_depth - player_y) * y_slope, y_depth)
+        if verif_x and not verif_y:
+            return d_x, x_coord, "ver"
+
+        elif verif_y and not verif_x:
+            return d_y, y_coord, "hor"
+
+        elif verif_x and verif_y:
+            if d_x <= d_y:
+                return d_x, x_coord, "ver"
+            else:
+                return d_y, y_coord, "hor"
+        else:
+            return MAX_DEPTH + 1, False, False
 
 def RayCasting(player_x, player_y, player_rotation, HEIGHT, wall_color):
     dist_list = []
