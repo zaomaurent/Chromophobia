@@ -46,24 +46,6 @@ maps = {
             },
 
             "3": {
-                "texture": pg.image.load("Assets/Sprites/greenlight.png"),
-                "height": 96,
-                "width": 64,
-                "ratio": 64 / 96,
-                "position": (37, 37),
-                "class": "neutral"
-            },
-
-            "4": {
-                "texture": pg.image.load("Assets/Sprites/greenlight.png"),
-                "height": 96,
-                "width": 64,
-                "ratio": 64 / 96,
-                "position": (0, 0),
-                "class": "neutral"
-            },
-
-            "5": {
                 "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),  # Texture du sprite
                 "height": 51,
                 "width": 37,
@@ -74,6 +56,87 @@ maps = {
                 "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
                 "last_hit": t.time()
             },
+
+            "4": {
+                "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),  # Texture du sprite
+                "height": 51,
+                "width": 37,
+                "ratio": 37 / 51,
+                "position": (135, 40),
+                "class": "ennemy",
+                "HP": 100,
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "last_hit": t.time()
+            },
+
+            "5": {
+                "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),  # Texture du sprite
+                "height": 51,
+                "width": 37,
+                "ratio": 37 / 51,
+                "position": (210,90),
+                "class": "ennemy",
+                "HP": 100,
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "last_hit": t.time()
+            },
+
+            "6": {
+                "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),  # Texture du sprite
+                "height": 51,
+                "width": 37,
+                "ratio": 37 / 51,
+                "position": (210, 185),
+                "class": "ennemy",
+                "HP": 100,
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "last_hit": t.time()
+            },
+            "7": {
+                "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),  # Texture du sprite
+                "height": 51,
+                "width": 37,
+                "ratio": 37 / 51,
+                "position": (135,210),
+                "class": "ennemy",
+                "HP": 100,
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "last_hit": t.time()
+            },
+            "8": {
+                "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),  # Texture du sprite
+                "height": 51,
+                "width": 37,
+                "ratio": 37 / 51,
+                "position": (35, 210),
+                "class": "ennemy",
+                "HP": 100,
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "last_hit": t.time()
+            },
+            "9": {
+                "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),  # Texture du sprite
+                "height": 51,
+                "width": 37,
+                "ratio": 37 / 51,
+                "position": (85, 210),
+                "class": "ennemy",
+                "HP": 100,
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "last_hit": t.time()
+            },
+            "10": {
+                "texture": pg.image.load("Assets/Sprites/Ennemis/test.png"),  # Texture du sprite
+                "height": 51,
+                "width": 37,
+                "ratio": 37 / 51,
+                "position": (60,160),
+                "class": "ennemy",
+                "HP": 100,
+                "dead_texture": pg.image.load("Assets/Sprites/Ennemis/test_death.png"),
+                "last_hit": t.time()
+            },
+
         }
     },
 
