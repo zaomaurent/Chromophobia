@@ -15,5 +15,6 @@ Utilisation:
               - Echap en jeu pour quitter / retourner dans les menus
               
 Pour jouer, cliquer sur "Modes de jeu" puis "Singleplayer". Le "Map creator" permet de creer une carte d'une taille définie en placant des murs. Nous n'avons pas finalisé cette partie qui renvoie donc une liste à intégrer manuellement au programme et à laquelle il faut rajouter des ennemis.
+Vous pouvez également cliquer sur le bouton "puissance 4" dans le menu pour jouer à un puissance 4 dans la console Python
 
 /!\ Si le jeu ne fonctionne pas bien et / ou rame sur votre pc, vous pouvez aller dans le fichier "constantes.py" à la ligne 51 et mettre la variable "LINE_SIZE" à 2 ou à 4 si cela rame encore.
