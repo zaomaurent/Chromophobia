@@ -18,7 +18,7 @@ maps = {
         "map size": 10,  # Taille de la map
         "tile size": 250 / 10,  # Echelle de la map
         "spawn point": (37.5, 37.5),  # Point d'apparition du joueur
-        "mob_quantity": 3,  # Nombre d'ennemis sur la map
+        "mob_quantity": 10,  # Nombre d'ennemis sur la map
         "sprites": {  # Dictionnaire des différents sprites et de leur position
 
             "1": {
